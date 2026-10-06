@@ -1,6 +1,9 @@
 import { TrendingUp, Calendar, DollarSign, Flame } from "lucide-react"
 import { Badge, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Card } from "@/components/ui"
 import { IconStatsBar } from "@/components/shared"
+import { imageUrl } from "@/lib/utils"
+
+const FALLBACK_IMG = "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop"
 
 export function RevenueStats({ dailyRevenue, weeklyRevenue, monthlyRevenue }) {
   return (
@@ -28,6 +31,7 @@ export function TopSellingTable({ topSellingItems }) {
           <TableHeader>
             <TableRow className="hover:bg-transparent border-none">
               <TableHead className="w-16">Rank</TableHead>
+              <TableHead className="w-14"></TableHead>
               <TableHead>Item Name</TableHead>
               <TableHead className="text-right">Units Sold</TableHead>
             </TableRow>
@@ -38,6 +42,13 @@ export function TopSellingTable({ topSellingItems }) {
                 <TableRow key={index}>
                   <TableCell className="font-bold text-[var(--color-muted)]">
                     #{index + 1}
+                  </TableCell>
+                  <TableCell>
+                    <img
+                      src={imageUrl(item.image_url, FALLBACK_IMG)}
+                      alt={item.item_name}
+                      className="w-9 h-9 rounded-lg object-cover border border-[var(--color-border)]"
+                    />
                   </TableCell>
                   <TableCell className="font-medium text-[var(--color-text)]">
                     {item.item_name}
@@ -51,7 +62,7 @@ export function TopSellingTable({ topSellingItems }) {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={3} className="text-center text-xs text-[var(--color-muted)] py-6">
+                <TableCell colSpan={4} className="text-center text-xs text-[var(--color-muted)] py-6">
                   No sales records available yet.
                 </TableCell>
               </TableRow>

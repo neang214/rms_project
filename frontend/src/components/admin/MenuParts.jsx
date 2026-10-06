@@ -101,11 +101,11 @@ export function MenuGrid({ items, isLoading, categoryName, onEdit, onDelete }) {
   if (isLoading) return <div className="text-center py-16 text-[var(--color-muted)] text-sm">Loading menu...</div>
   if (items.length === 0) return <div className="text-center py-16 text-[var(--color-muted)] text-sm">No menu items found.</div>
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
       {items.map(item => (
         <div key={item.menu_item_id}
-          className={cn("bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden hover:shadow-md transition-all duration-200 group relative", !item.available && "opacity-60")}>
-          <div className="relative h-36 overflow-hidden bg-[var(--color-border)]">
+          className={cn("bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] overflow-hidden hover:shadow-md transition-all duration-200 group relative", !item.available && "opacity-60")}>
+          <div className="relative aspect-square overflow-hidden bg-[var(--color-border)]">
             <img src={imageUrl(item.image_url, FALLBACK_IMG)} alt={menuItemName(item, lang)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
             {!item.available && (
               <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -113,19 +113,19 @@ export function MenuGrid({ items, isLoading, categoryName, onEdit, onDelete }) {
               </div>
             )}
           </div>
-          <div className="p-3">
-            <div className="font-medium text-[var(--color-text)] text-sm leading-snug line-clamp-2">{menuItemName(item, lang)}</div>
-            <div className="text-xs text-[var(--color-muted)] mt-1 line-clamp-1">{categoryName(item.category_id)}</div>
-            <div className="flex items-center justify-between mt-2.5">
-              <span className="text-base font-bold text-[var(--color-text)]">$ {Number(item.price).toFixed(2)}</span>
+          <div className="p-2.5">
+            <div className="font-medium text-[var(--color-text)] text-xs leading-snug line-clamp-2">{menuItemName(item, lang)}</div>
+            <div className="text-[10px] text-[var(--color-muted)] mt-0.5 line-clamp-1">{categoryName(item.category_id)}</div>
+            <div className="flex items-center justify-between mt-2">
+              <span className="text-sm font-bold text-[var(--color-text)]">$ {Number(item.price).toFixed(2)}</span>
               <div className="flex items-center gap-0.5">
                 <button onClick={() => onEdit(item)}
-                  className="p-1.5 rounded-lg hover:bg-[var(--color-primary-muted)] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors">
-                  <Pencil size={14} />
+                  className="p-1 rounded-lg hover:bg-[var(--color-primary-muted)] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors">
+                  <Pencil size={13} />
                 </button>
                 <button onClick={() => onDelete(item)}
-                  className="p-1.5 rounded-lg hover:bg-[var(--color-danger-muted)] text-[var(--color-muted)] hover:text-[var(--color-danger)] transition-colors">
-                  <Trash2 size={14} />
+                  className="p-1 rounded-lg hover:bg-[var(--color-danger-muted)] text-[var(--color-muted)] hover:text-[var(--color-danger)] transition-colors">
+                  <Trash2 size={13} />
                 </button>
               </div>
             </div>
