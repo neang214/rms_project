@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useLang } from "@/i18n/LanguageContext"
-import { Eye, EyeOff, LogIn, Leaf } from "lucide-react"
+import { Eye, EyeOff, LogIn } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { authContext } from "../context/authContext"
 
@@ -28,69 +28,23 @@ export default function Login() {
   const handleKey = (e) => { if (e.key === "Enter") handleSubmit() }
 
   return (
-    <div className="min-h-screen w-full flex bg-[var(--color-background)] font-sans antialiased">
-
+    <div className="min-h-screen w-full flex items-center justify-center bg-[var(--color-background)] font-sans antialiased relative overflow-hidden p-6">
       {}
-      <div className="hidden lg:flex lg:w-[45%] bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dark,var(--color-primary))] relative overflow-hidden flex-col justify-between p-16">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-[var(--color-primary)]/[0.07] blur-3xl -mr-32 -mt-32 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[var(--color-accent)]/[0.08] blur-3xl -ml-24 -mb-24 pointer-events-none" />
+
+      <div className="relative z-10 w-full max-w-[400px]">
         {}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-white/[0.03] blur-3xl -mr-32 -mt-32 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-black/[0.04] blur-2xl -ml-24 -mb-24 pointer-events-none" />
-        
-        {}
-        <div className="relative z-10 opacity-15">
-          <Leaf size={48} className="text-white rotate-12" />
+        <div className="flex flex-col items-center text-center mb-8">
+          <div className="w-16 h-16 rounded-2xl bg-[var(--color-primary)] text-white flex items-center justify-center shadow-lg shadow-[var(--color-primary)]/20 mb-4">
+            <span className="font-display font-black text-lg tracking-wide">RMS</span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text)]">{t("login.signIn")}</h1>
+          <p className="text-sm text-[var(--color-muted)] mt-1.5">{t("login.formSubtitle")}</p>
         </div>
 
         {}
-        <div className="relative z-10 w-full max-w-sm mx-auto my-auto flex flex-col items-center text-center">
-          <div className="bg-white/[0.07] backdrop-blur-md border border-white/10 rounded-3xl p-8 w-full shadow-2xl shadow-black/10">
-            <div className="font-display font-black text-5xl text-white tracking-wider leading-none">RMS</div>
-            <div className="text-white/90 text-sm font-medium tracking-wide mt-2 uppercase">Restaurant Management System</div>
-            
-            <div className="h-px bg-white/10 my-6 w-3/4 mx-auto" />
-            
-            <h2 className="text-white text-xl font-semibold mb-2">{t("login.welcomeBack")}</h2>
-            <p className="text-white/70 text-xs leading-relaxed max-w-[280px] mx-auto">
-              {t("login.welcomeSub")}
-            </p>
-          </div>
-
-          {}
-          <div className="grid grid-cols-3 gap-3 w-full mt-8">
-            {[{ value: "11", label: t("login.tables") }, { value: "4", label: t("login.roles") }, { value: "100+", label: t("login.menuItems") }].map(({ value, label }) => (
-              <div key={label} className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-3 backdrop-blur-sm">
-                <div className="text-white font-bold text-lg tracking-tight">{value}</div>
-                <div className="text-white/50 text-[10px] uppercase font-medium tracking-wider mt-0.5">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {}
-        <div className="relative z-10 text-center text-white/40 text-xs font-medium tracking-wide">
-          © {new Date().getFullYear()} RMS
-        </div>
-      </div>
-
-      {}
-      <div className="flex-1 flex flex-col items-center justify-center p-8 sm:p-12 lg:p-16 bg-gradient-to-b from-[var(--color-background)] to-[var(--color-surface,var(--color-background))]">
-        
-        {}
-        <div className="lg:hidden mb-12 text-center">
-          <div className="inline-flex flex-col items-center bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl px-6 py-4 shadow-sm">
-            <div className="font-display font-black text-3xl text-[var(--color-primary)] tracking-wide">RMS</div>
-            <div className="text-[var(--color-text-secondary)] text-[11px] font-medium tracking-wider mt-1 uppercase">Restaurant Management System</div>
-          </div>
-        </div>
-
-        <div className="w-full max-w-[400px]">
-          {}
-          <div className="mb-8 text-center sm:text-left">
-            <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text)]">{t("login.signIn")}</h1>
-            <p className="text-sm text-[var(--color-muted)] mt-1.5">{t("login.formSubtitle")}</p>
-          </div>
-
-          {}
+        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl shadow-sm p-6 sm:p-8">
           <div className="space-y-4">
             
             {}
@@ -157,7 +111,11 @@ export default function Login() {
               )}
             </button>
           </div>
+        </div>
 
+        {}
+        <div className="text-center text-xs text-[var(--color-muted)] mt-6">
+          © {new Date().getFullYear()} RMS
         </div>
       </div>
     </div>
