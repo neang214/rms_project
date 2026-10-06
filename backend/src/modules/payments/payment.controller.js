@@ -102,14 +102,6 @@ export const createPayment = async (req, res) => {
                 .status(409)
                 .json({ message: "This order has already been paid" });
 
-        
-        
-        
-        if (order.confirmed === false)
-            return res
-                .status(400)
-                .json({ message: "Order must be confirmed before it can be paid" });
-
         const totalAmount = order.order_items.reduce((sum, item) => {
             return sum + item.quantity * Number(item.unit_price);
         }, 0);

@@ -24,8 +24,6 @@ export const generateKHQR = async (req, res) => {
     if (!order) return res.status(404).json({ message: "Order not found" });
     if (order.payments.length > 0)
       return res.status(409).json({ message: "This order has already been paid" });
-    if (order.confirmed === false)
-      return res.status(400).json({ message: "Order must be confirmed before it can be paid" });
 
     const totalUSD = order.order_items.reduce(
       (sum, item) => sum + item.quantity * Number(item.unit_price), 0
