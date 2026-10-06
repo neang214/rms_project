@@ -1,4 +1,5 @@
 import { Search, Pencil, Trash2, Users, Shield, ChefHat, Coffee, DollarSign } from "lucide-react"
+import { IconStatsBar } from "@/components/shared"
 import {
   Button, Badge, Card, Input, Label,
   Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
@@ -7,35 +8,22 @@ import {
 } from "@/components/ui"
 
 export const roleConfig = {
-  admin:   { label: "Admin",   color: "purple",  icon: Shield },
-  kitchen: { label: "Kitchen", color: "orange",  icon: ChefHat },
-  barista: { label: "Barista", color: "warning", icon: Coffee },
-  cashier: { label: "Cashier", color: "success", icon: DollarSign },
+  admin:   { label: "Admin",   icon: Shield },
+  kitchen: { label: "Kitchen", icon: ChefHat },
+  barista: { label: "Barista", icon: Coffee },
+  cashier: { label: "Cashier", icon: DollarSign },
 }
 
 const avatarColors = ["bg-[var(--color-primary-muted)] text-[var(--color-primary)]", "bg-[var(--color-info-muted)] text-[var(--color-info)]", "bg-[var(--color-flame-muted)] text-[var(--color-flame)]", "bg-[var(--color-plum-muted)] text-[var(--color-plum)]"]
 
 export function UserStats({ users, counts }) {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {[
-        { label: "Total User", value: users.length, sub: "Staff members", icon: Users, color: "text-[var(--color-primary)]" },
-        { label: "Admin", value: counts.admin, sub: "Administrators", icon: Shield, color: "text-[var(--color-plum)]" },
-        { label: "Kitchen Staff", value: counts.kitchen, sub: "Kitchen team", icon: ChefHat, color: "text-[var(--color-flame)]" },
-        { label: "Service Staff", value: counts.barista + counts.cashier, sub: "Baristas & Cashiers", icon: Coffee, color: "text-[var(--color-warning)]" },
-      ].map(({ label, value, sub, icon: Icon, color }) => (
-        <Card key={label} className="p-5">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wide">{label}</span>
-            <div className="w-8 h-8 rounded-xl bg-[var(--color-primary-muted)] flex items-center justify-center">
-              <Icon size={16} className={color} />
-            </div>
-          </div>
-          <div className="text-2xl font-bold text-[var(--color-text)] mb-1">{value}</div>
-          <div className="text-xs text-[var(--color-muted)]">{sub}</div>
-        </Card>
-      ))}
-    </div>
+    <IconStatsBar columns={4} stats={[
+      { label: "Total Users", value: users.length, icon: Users, bg: "bg-[var(--color-primary-muted)]", iconBg: "bg-[var(--color-primary-muted)]", text: "text-[var(--color-primary)]" },
+      { label: "Admin", value: counts.admin, icon: Shield, bg: "bg-[var(--color-plum-muted)]", iconBg: "bg-[var(--color-plum-muted)]", text: "text-[var(--color-plum)]" },
+      { label: "Kitchen Staff", value: counts.kitchen, icon: ChefHat, bg: "bg-[var(--color-flame-muted)]", iconBg: "bg-[var(--color-flame-muted)]", text: "text-[var(--color-flame)]" },
+      { label: "Service Staff", value: counts.barista + counts.cashier, icon: Coffee, bg: "bg-[var(--color-accent-muted)]", iconBg: "bg-[var(--color-accent-muted)]", text: "text-[var(--color-warning)]" },
+    ]} />
   )
 }
 

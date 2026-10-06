@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { useLang } from "@/i18n/LanguageContext"
 import { deleteErrorMessage } from "@/lib/utils"
-import { Search, Plus, Users } from "lucide-react"
-import { Button, Card, Input } from "@/components/ui"
+import { Search, Plus, Users, UserX } from "lucide-react"
+import { Button, Input } from "@/components/ui"
 import { useSupplierStore } from "../../context/supplierContext"
 import { usePageTitle } from "../../hooks/usePageTitle"
-import { SimpleHeader, ConfirmModal } from "@/components/shared"
+import { SimpleHeader, ConfirmModal, IconStatsBar } from "@/components/shared"
 import { SupplierGrid, SupplierFormDialog } from "@/components/admin/SuppliersParts"
 
 export default function Suppliers() {
@@ -105,18 +105,10 @@ export default function Suppliers() {
         action={<Button onClick={openAdd} className="gap-2"><Plus size={15} /> Add New Supplier</Button>} />
 
       {}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md">
-        <Card className="p-5">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wide">Total Suppliers</span>
-            <div className="w-8 h-8 rounded-xl bg-[var(--color-primary-muted)] flex items-center justify-center">
-              <Users size={16} className="text-[var(--color-primary)]" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold text-[var(--color-text)] mb-1">{suppliers.length}</div>
-          <div className="text-xs text-[var(--color-muted)]">Active partners</div>
-        </Card>
-      </div>
+      <IconStatsBar columns={2} stats={[
+        { label: "Total Suppliers", value: suppliers.length, icon: Users, bg: "bg-[var(--color-primary-muted)]", iconBg: "bg-[var(--color-primary-muted)]", text: "text-[var(--color-primary)]" },
+        { label: "Missing Contact Info", value: suppliers.filter(s => !s.phone && !s.email).length, icon: UserX, bg: "bg-[var(--color-accent-muted)]", iconBg: "bg-[var(--color-accent-muted)]", text: "text-[var(--color-warning)]" },
+      ]} />
 
       {}
       <div className="flex gap-3 flex-wrap">

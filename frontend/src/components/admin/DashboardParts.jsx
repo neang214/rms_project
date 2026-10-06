@@ -1,27 +1,14 @@
 import { TrendingUp, Calendar, DollarSign, Flame } from "lucide-react"
-import { Card, Badge, Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui"
+import { Badge, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Card } from "@/components/ui"
+import { IconStatsBar } from "@/components/shared"
 
 export function RevenueStats({ dailyRevenue, weeklyRevenue, monthlyRevenue }) {
-  const revenueStats = [
-    { label: "Today's Revenue", value: dailyRevenue?.total ? `$${Number(dailyRevenue.total).toFixed(2)}` : "$0.00", sub: "From today's paid orders", icon: TrendingUp, color: "text-[var(--color-primary)]" },
-    { label: "Weekly Revenue", value: weeklyRevenue?.total ? `$${Number(weeklyRevenue.total).toFixed(2)}` : "$0.00", sub: "Current week cumulative", icon: Calendar, color: "text-[var(--color-info)]" },
-    { label: "Monthly Revenue", value: monthlyRevenue?.total ? `$${Number(monthlyRevenue.total).toFixed(2)}` : "$0.00", sub: "Current month cumulative", icon: DollarSign, color: "text-[var(--color-plum)]" },
-  ]
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      {revenueStats.map(({ label, value, sub, icon: Icon, color }) => (
-        <Card key={label} className="p-5 hover:shadow-md transition-shadow">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wide">{label}</span>
-            <div className="w-8 h-8 rounded-xl bg-[var(--color-primary-muted)] flex items-center justify-center">
-              <Icon size={16} className={color} />
-            </div>
-          </div>
-          <div className="text-2xl font-bold text-[var(--color-text)] mb-1">{value}</div>
-          <div className="text-xs text-[var(--color-muted)]">{sub}</div>
-        </Card>
-      ))}
-    </div>
+    <IconStatsBar columns={3} stats={[
+      { label: "Today's Revenue", value: dailyRevenue?.total ? `$${Number(dailyRevenue.total).toFixed(2)}` : "$0.00", icon: TrendingUp, bg: "bg-[var(--color-primary-muted)]", iconBg: "bg-[var(--color-primary-muted)]", text: "text-[var(--color-primary)]" },
+      { label: "Weekly Revenue", value: weeklyRevenue?.total ? `$${Number(weeklyRevenue.total).toFixed(2)}` : "$0.00", icon: Calendar, bg: "bg-[var(--color-info-muted)]", iconBg: "bg-[var(--color-info-muted)]", text: "text-[var(--color-info)]" },
+      { label: "Monthly Revenue", value: monthlyRevenue?.total ? `$${Number(monthlyRevenue.total).toFixed(2)}` : "$0.00", icon: DollarSign, bg: "bg-[var(--color-plum-muted)]", iconBg: "bg-[var(--color-plum-muted)]", text: "text-[var(--color-plum)]" },
+    ]} />
   )
 }
 

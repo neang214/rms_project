@@ -1,11 +1,12 @@
 import { useRef } from "react"
-import { Search, Plus, Eye, Pencil, Trash2, Package, AlertTriangle, Layers, DollarSign, ImagePlus, X, ChefHat, Coffee, Store } from "lucide-react"
+import { Search, Plus, Eye, Pencil, Trash2, Package, PackageX, AlertTriangle, Layers, ImagePlus, X, ChefHat, Coffee, Store } from "lucide-react"
 import {
   Button, Badge, Input, Label, Card,
   Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from "@/components/ui"
+import { IconStatsBar } from "@/components/shared"
 
 export function stockStatus(item) {
   if (item.min_level == null) return "InStock"
@@ -77,26 +78,14 @@ export function StockImagePicker({ preview, onSelect, onClear }) {
 }
 
 export function StockStats({ stockItems, lowStockCount, unitNames }) {
+  const outOfStockCount = stockItems.filter(i => Number(i.quantity) <= 0).length
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {[
-        { label: "Total Item", value: stockItems.length, sub: "In inventory", icon: Package, color: "text-[var(--color-primary)]" },
-        { label: "Low Stock", value: lowStockCount, sub: "Need restocking", icon: AlertTriangle, color: "text-[var(--color-warning)]" },
-        { label: "Units", value: unitNames.length, sub: "Unit types", icon: Layers, color: "text-[var(--color-info)]" },
-        { label: "Total Items Tracked", value: stockItems.length, sub: "Across all units", icon: DollarSign, color: "text-[var(--color-plum)]" },
-      ].map(({ label, value, sub, icon: Icon, color }) => (
-        <Card key={label} className="p-5">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wide">{label}</span>
-            <div className="w-8 h-8 rounded-xl bg-[var(--color-primary-muted)] flex items-center justify-center">
-              <Icon size={16} className={color} />
-            </div>
-          </div>
-          <div className="text-2xl font-bold text-[var(--color-text)] mb-1">{value}</div>
-          <div className="text-xs text-[var(--color-muted)]">{sub}</div>
-        </Card>
-      ))}
-    </div>
+    <IconStatsBar columns={4} stats={[
+      { label: "Total Items", value: stockItems.length, icon: Package, bg: "bg-[var(--color-primary-muted)]", iconBg: "bg-[var(--color-primary-muted)]", text: "text-[var(--color-primary)]" },
+      { label: "Low Stock", value: lowStockCount, icon: AlertTriangle, bg: "bg-[var(--color-accent-muted)]", iconBg: "bg-[var(--color-accent-muted)]", text: "text-[var(--color-warning)]" },
+      { label: "Out of Stock", value: outOfStockCount, icon: PackageX, bg: "bg-[var(--color-danger-muted)]", iconBg: "bg-[var(--color-danger-muted)]", text: "text-[var(--color-danger)]" },
+      { label: "Units", value: unitNames.length, icon: Layers, bg: "bg-[var(--color-info-muted)]", iconBg: "bg-[var(--color-info-muted)]", text: "text-[var(--color-info)]" },
+    ]} />
   )
 }
 

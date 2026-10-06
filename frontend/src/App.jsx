@@ -85,8 +85,8 @@ function StaffApp() {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center gap-4 bg-[var(--color-background)]">
         <div className="border-2 border-[var(--color-primary)] rounded-xl px-6 py-4 text-center">
-          <div className="font-display font-bold text-2xl text-[var(--color-primary)]">ZOOM</div>
-          <div className="text-xs text-[var(--color-muted)] mt-0.5">Garden Cafe & Wine</div>
+          <div className="font-display font-bold text-2xl text-[var(--color-primary)]">RMS</div>
+          <div className="text-xs text-[var(--color-muted)] mt-0.5">Restaurant Management System</div>
         </div>
         <div className="w-6 h-6 border-2 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
       </div>

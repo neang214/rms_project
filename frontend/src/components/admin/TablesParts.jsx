@@ -145,12 +145,12 @@ export function TableViewDialog({ table, order, loading, onClose }) {
             <div className="grid grid-cols-3 gap-3 my-3">
               {[
                 { label: "Status", value: table.is_available ? "Available" : "Occupied" },
-                { label: "Order Total", value: `$${itemTotal(order).toFixed(2)}`, green: true },
-                { label: "Capacity", value: `${table.capacity} guests`, green: true },
-              ].map(({ label, value, green }) => (
+                { label: "Order Total", value: `$${itemTotal(order).toFixed(2)}`, highlight: true },
+                { label: "Capacity", value: `${table.capacity} guests`, highlight: true },
+              ].map(({ label, value, highlight }) => (
                 <div key={label} className="rounded-xl border border-[var(--color-border)] p-3 text-center">
                   <div className="text-xs text-[var(--color-muted)] mb-1">{label}</div>
-                  <div className={`text-lg font-bold ${green ? "text-[var(--color-primary)]" : "text-[var(--color-text)]"}`}>{value}</div>
+                  <div className={`text-lg font-bold ${highlight ? "text-[var(--color-primary)]" : "text-[var(--color-text)]"}`}>{value}</div>
                 </div>
               ))}
             </div>

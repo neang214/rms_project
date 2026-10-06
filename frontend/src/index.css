@@ -2,45 +2,46 @@
 @import "tailwindcss";
 
 /*
- * Refined palette — same family as before (botanical green + warm amber,
- * "Zoom Garden Café & Wine") but deeper and less saturated than the
- * original stock-emerald/stock-amber pairing, which read as a generic
- * SaaS template rather than a café brand. Status colors (success/warning/
- * danger) are pulled from this same warm, muted family instead of raw
- * Tailwind red/blue/green, and a new --color-info token replaces the ad
- * hoc bright blue used for things like party-size badges — the old raw
- * Tailwind colors sprinkled through components had no dark-mode variants
- * at all, so this also fixes those badges going illegible in dark mode.
+ * RMS palette — a single violet family (#34117E → #D0BCFC), used for an
+ * open-source, brand-neutral theme (replaces the old café-specific green
+ * + amber pairing). Every semantic slot (primary/accent/flame/plum and
+ * success/warning/danger/info) is drawn from this one hue and kept apart
+ * mainly by lightness, so role badges and status pills stay distinct
+ * without pulling in an unrelated color family. Because everything is
+ * one hue now, don't rely on color alone to convey status/role in new
+ * UI — pair it with an icon or label, since lightness-only differences
+ * are harder to tell apart than the old distinct hues, especially for
+ * colorblind users.
  */
 @theme {
-  --color-primary: #1f7d5c;
-  --color-primary-light: #4d9d78;
-  --color-primary-dark: #145843;
-  --color-primary-muted: #e3f1e9;
+  --color-primary: #6631db;
+  --color-primary-light: #7b45f0;
+  --color-primary-dark: #491ab1;
+  --color-primary-muted: #f0eafb;
 
-  --color-accent: #b5702f;
-  --color-accent-light: #d08f4f;
-  --color-accent-muted: #f5e6d3;
+  --color-accent: #a981ff;
+  --color-accent-light: #b796fe;
+  --color-accent-muted: #f6f2ff;
 
-  --color-border: #ece7de;
-  --color-border-strong: #ddd5c7;
-  --color-muted: #85796b;
-  --color-text: #2b2621;
-  --color-text-secondary: #5c5347;
-  --color-background: #faf7f2;
+  --color-border: #ece4fb;
+  --color-border-strong: #dbcbf5;
+  --color-muted: #7a6fa0;
+  --color-text: #241245;
+  --color-text-secondary: #5b4e82;
+  --color-background: #fbf9fe;
   --color-surface: #ffffff;
   --color-text-invert: #ffffff;
 
-  --color-success: #1f7d5c;
-  --color-warning: #b5702f;
-  --color-danger: #b3413a;
-  --color-danger-muted: #f6e6e4;
-  --color-info: #3f6e8c;
-  --color-info-muted: #e5edf1;
-  --color-flame: #c1522a;
-  --color-flame-muted: #f8e0d2;
-  --color-plum: #7a4a68;
-  --color-plum-muted: #f2e7ee;
+  --color-success: #6631db;
+  --color-warning: #a981ff;
+  --color-danger: #34117e;
+  --color-danger-muted: #ebe7f2;
+  --color-info: #7b45f0;
+  --color-info-muted: #f2ecfe;
+  --color-flame: #491ab1;
+  --color-flame-muted: #ede8f7;
+  --color-plum: #d0bcfc;
+  --color-plum-muted: #faf8ff;
 
   --font-sans: 'Roboto', sans-serif;
   --font-display: 'Roboto', sans-serif;
@@ -49,29 +50,29 @@
 :root { color-scheme: light; }
 
 .dark {
-  --color-background: #17140f;
-  --color-surface: #211d17;
-  --color-border: #2c261e;
-  --color-text: #f5f0e8;
-  --color-text-secondary: #b8ac9a;
-  --color-primary: #4d9d78;
-  --color-primary-light: #74b899;
-  --color-primary-dark: #1f7d5c;
-  --color-primary-muted: #1c3329;
-  --color-border-strong: #3a3226;
-  --color-text-invert: #17140f;
-  --color-accent: #d08f4f;
-  --color-accent-light: #e0ad78;
-  --color-accent-muted: #3a2c1a;
-  --color-muted: #9c9182;
-  --color-danger: #cf6055;
-  --color-danger-muted: #3a231f;
-  --color-info: #6b9bb8;
-  --color-info-muted: #1f2e36;
-  --color-flame: #dd8256;
-  --color-flame-muted: #3d2419;
-  --color-plum: #b98bab;
-  --color-plum-muted: #2e2230;
+  --color-background: #170b33;
+  --color-surface: #1e0f42;
+  --color-border: #2e1460;
+  --color-text: #f3eefc;
+  --color-text-secondary: #c3b3e8;
+  --color-primary: #a981ff;
+  --color-primary-light: #ba9aff;
+  --color-primary-dark: #6631db;
+  --color-primary-muted: #2a1755;
+  --color-border-strong: #3d1c7a;
+  --color-text-invert: #170b33;
+  --color-accent: #b796fe;
+  --color-accent-light: #c5abfe;
+  --color-accent-muted: #33205f;
+  --color-muted: #a08cc7;
+  --color-danger: #8f7cb8;
+  --color-danger-muted: #241142;
+  --color-info: #8f61f2;
+  --color-info-muted: #241646;
+  --color-flame: #896acc;
+  --color-flame-muted: #221046;
+  --color-plum: #d0bcfc;
+  --color-plum-muted: #352e49;
   color-scheme: dark;
 }
 

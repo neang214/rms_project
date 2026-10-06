@@ -147,9 +147,8 @@ export default function Layout({ children }) {
         {}
         <div className="px-4 pt-5 pb-4 shrink-0">
           <div className="border-2 border-[var(--color-primary)] rounded-xl p-3 text-center">
-            <div className="font-display font-bold text-xl text-[var(--color-primary)] leading-tight">ZOOM</div>
-            <div className="text-[10px] text-[var(--color-text-secondary)] font-medium">Garden Cafe & Wine</div>
-            <div className="text-[9px] text-[var(--color-muted)]">Sen Sok</div>
+            <div className="font-display font-bold text-xl text-[var(--color-primary)] leading-tight">RMS</div>
+            <div className="text-[10px] text-[var(--color-text-secondary)] font-medium">Restaurant Management System</div>
           </div>
         </div>
 
@@ -242,8 +241,7 @@ export default function Layout({ children }) {
 
           {}
           <div className="border border-[var(--color-primary)]/40 rounded-lg px-2 py-1 hidden sm:block">
-            <span className="font-display font-bold text-sm text-[var(--color-primary)]">ZOOM</span>
-            <span className="text-[9px] text-[var(--color-muted)] ml-1">Garden Cafe & Wine</span>
+            <span className="font-display font-bold text-sm text-[var(--color-primary)]">RMS</span>
           </div>
 
           <div className="flex items-center gap-2 ml-auto">

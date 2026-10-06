@@ -1,5 +1,6 @@
 import { ShoppingCart, TrendingUp, Receipt, Printer, RefreshCw, DollarSign } from "lucide-react"
 import { Button, Card, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Badge } from "@/components/ui"
+import { IconStatsBar } from "@/components/shared"
 import { cn } from "@/lib/utils"
 
 export const periods = ["Daily", "Weekly", "Monthly"]
@@ -8,25 +9,12 @@ export const orderTotal = (order) => order.order_items?.reduce((sum, oi) => sum 
 
 export function PaymentStats({ orders, todaysPayments, todaysRevenue }) {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {[
-        { label: "Total Orders", value: orders.length, sub: "All time orders", icon: ShoppingCart },
-        { label: "Today's Payments", value: todaysPayments.length, sub: "Orders paid today", icon: Receipt },
-        { label: "Today's Revenue", value: `$${todaysRevenue.toFixed(2)}`, sub: "From paid orders", icon: TrendingUp },
-        { label: "Total Revenue (All Time)", value: `$${orders.filter(o => o.status === "Paid").reduce((s, o) => s + orderTotal(o), 0).toFixed(2)}`, sub: "Lifetime", icon: DollarSign },
-      ].map(({ label, value, sub, icon: Icon }) => (
-        <Card key={label} className="p-5">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wide">{label}</span>
-            <div className="w-8 h-8 rounded-xl bg-[var(--color-primary-muted)] flex items-center justify-center">
-              <Icon size={16} className="text-[var(--color-primary)]" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold text-[var(--color-text)] mb-1">{value}</div>
-          <div className="text-xs text-[var(--color-muted)]">{sub}</div>
-        </Card>
-      ))}
-    </div>
+    <IconStatsBar columns={4} stats={[
+      { label: "Total Orders", value: orders.length, icon: ShoppingCart, bg: "bg-[var(--color-primary-muted)]", iconBg: "bg-[var(--color-primary-muted)]", text: "text-[var(--color-primary)]" },
+      { label: "Today's Payments", value: todaysPayments.length, icon: Receipt, bg: "bg-[var(--color-accent-muted)]", iconBg: "bg-[var(--color-accent-muted)]", text: "text-[var(--color-accent)]" },
+      { label: "Today's Revenue", value: `$${todaysRevenue.toFixed(2)}`, icon: TrendingUp, bg: "bg-[var(--color-info-muted)]", iconBg: "bg-[var(--color-info-muted)]", text: "text-[var(--color-info)]" },
+      { label: "Total Revenue (All Time)", value: `$${orders.filter(o => o.status === "Paid").reduce((s, o) => s + orderTotal(o), 0).toFixed(2)}`, icon: DollarSign, bg: "bg-[var(--color-plum-muted)]", iconBg: "bg-[var(--color-plum-muted)]", text: "text-[var(--color-plum)]" },
+    ]} />
   )
 }
 
