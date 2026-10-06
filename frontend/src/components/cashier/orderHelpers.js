@@ -9,9 +9,9 @@ export function orderTotal(order) {
 }
 
 export const statusConfig = {
-  Served:    { labelKey: "cashier.readyForPayment", color: "bg-[var(--color-primary)] text-white", barColor: "border-l-[var(--color-primary)]" },
-  Preparing: { labelKey: "status.cooking",          color: "bg-amber-100 text-amber-700",          barColor: "border-l-amber-400" },
-  Pending:   { labelKey: "status.pending",          color: "bg-gray-100 text-gray-600",            barColor: "border-l-gray-300" },
+  Served:    { labelKey: "cashier.readyForPayment", color: "bg-[var(--color-primary)] text-white",             barColor: "border-l-[var(--color-primary)]" },
+  Preparing: { labelKey: "status.cooking",          color: "bg-[var(--color-warning)]/15 text-[var(--color-warning)]", barColor: "border-l-[var(--color-warning)]" },
+  Pending:   { labelKey: "status.pending",          color: "bg-[var(--color-muted)]/15 text-[var(--color-muted)]",     barColor: "border-l-[var(--color-muted)]" },
 }
 
 export function printOrderReceipt(order) {
@@ -63,8 +63,7 @@ export function printOrderReceipt(order) {
       </head>
       <body>
         <div class="center">
-          <h2>Zoom Garden Café &amp; Wine</h2>
-          <div class="muted">Sen Sok</div>
+          <h2>RMS</h2>
         </div>
         <hr/>
         ${order.queue_number != null ? `

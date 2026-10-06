@@ -44,9 +44,8 @@ export default function Login() {
         {}
         <div className="relative z-10 w-full max-w-sm mx-auto my-auto flex flex-col items-center text-center">
           <div className="bg-white/[0.07] backdrop-blur-md border border-white/10 rounded-3xl p-8 w-full shadow-2xl shadow-black/10">
-            <div className="font-display font-black text-5xl text-white tracking-wider leading-none">ZOOM</div>
-            <div className="text-white/90 text-sm font-medium tracking-wide mt-2 uppercase">Garden Cafe & Wine</div>
-            <div className="text-white/50 text-xs tracking-wider mt-0.5">Sen Sok</div>
+            <div className="font-display font-black text-5xl text-white tracking-wider leading-none">RMS</div>
+            <div className="text-white/90 text-sm font-medium tracking-wide mt-2 uppercase">Restaurant Management System</div>
             
             <div className="h-px bg-white/10 my-6 w-3/4 mx-auto" />
             
@@ -69,7 +68,7 @@ export default function Login() {
 
         {}
         <div className="relative z-10 text-center text-white/40 text-xs font-medium tracking-wide">
-          © {new Date().getFullYear()} ZOOM Management System
+          © {new Date().getFullYear()} RMS
         </div>
       </div>
 
@@ -79,8 +78,8 @@ export default function Login() {
         {}
         <div className="lg:hidden mb-12 text-center">
           <div className="inline-flex flex-col items-center bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl px-6 py-4 shadow-sm">
-            <div className="font-display font-black text-3xl text-[var(--color-primary)] tracking-wide">ZOOM</div>
-            <div className="text-[var(--color-text-secondary)] text-[11px] font-medium tracking-wider mt-1 uppercase">Garden Cafe & Wine · Sen Sok</div>
+            <div className="font-display font-black text-3xl text-[var(--color-primary)] tracking-wide">RMS</div>
+            <div className="text-[var(--color-text-secondary)] text-[11px] font-medium tracking-wider mt-1 uppercase">Restaurant Management System</div>
           </div>
         </div>
 

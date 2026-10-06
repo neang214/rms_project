@@ -79,7 +79,7 @@ export function useStaffNotifications(role) {
   const { connected } = useSocketRole(role)
   const [bellRinging, setBellRinging] = useState(false)
 
-  const { unconfirmedOrders, fetchUnconfirmedOrders } = useOrderStore()
+  const { orders, fetchOrders } = useOrderStore()
   const { kitchenQueue, baristaQueue, fetchKitchenQueue, fetchBaristaQueue } = useOrderItemStore()
 
   const ring = useCallback(() => {
@@ -88,31 +88,23 @@ export function useStaffNotifications(role) {
     setTimeout(() => setBellRinging(false), 2000)
   }, [])
 
-  
-  
-  
-  
+  // Cashier no longer reviews/confirms orders (that existed only to vet
+  // guest self-submitted orders) — staff create orders directly now, so
+  // the cashier's bell instead tracks orders that are Served and still
+  // unpaid, i.e. need the cashier's attention to collect payment.
   useSocketEvent("order:new", () => {
-    if (role === "cashier") {
-      fetchUnconfirmedOrders()
-      ring()
-    }
+    if (role === "cashier") fetchOrders()
     if (role === "kitchen") fetchKitchenQueue()
     if (role === "barista") fetchBaristaQueue()
   })
-  useSocketEvent("order:confirmed", () => {
-    if (role === "cashier") fetchUnconfirmedOrders()
+  useSocketEvent("order:status_changed", () => {
+    if (role === "cashier") fetchOrders()
   })
   useSocketEvent("order:deleted", () => {
-    if (role === "cashier") fetchUnconfirmedOrders()
+    if (role === "cashier") fetchOrders()
   })
 
-  
-  
-  
-  
   useSocketEvent("order_item:new", () => {
-    if (role === "cashier") ring()
     if (role === "kitchen") {
       fetchKitchenQueue()
       ring()
@@ -122,14 +114,20 @@ export function useStaffNotifications(role) {
       ring()
     }
   })
+  useSocketEvent("order_item:status_changed", () => {
+    if (role === "cashier") {
+      fetchOrders()
+      ring()
+    }
+  })
 
   let count = 0
-  if (role === "cashier") count = unconfirmedOrders.length
+  if (role === "cashier") count = orders.filter(o => o.status === "Served" && !(o.is_paid ?? o.status === "Paid")).length
   if (role === "kitchen") count = kitchenQueue.filter(i => i.status === "Pending").length
   if (role === "barista") count = baristaQueue.filter(i => i.status === "Pending").length
 
   const refresh = useCallback(() => {
-    if (role === "cashier") fetchUnconfirmedOrders()
+    if (role === "cashier") fetchOrders()
     if (role === "kitchen") fetchKitchenQueue()
     if (role === "barista") fetchBaristaQueue()
   }, [role])

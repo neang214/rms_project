@@ -3,7 +3,6 @@ import api from "../services/axios";
 
 export const useOrderStore = create((set, get) => ({
   orders: [],
-  unconfirmedOrders: [],
   isLoading: false,
   error: null,
 
@@ -15,19 +14,6 @@ export const useOrderStore = create((set, get) => ({
       return res.data;
     } catch (error) {
       set({ error: error.message, isLoading: false });
-      throw error;
-    }
-  },
-
-  
-  
-  
-  fetchUnconfirmedOrders: async () => {
-    try {
-      const res = await api.get("/orders/unconfirmed");
-      set({ unconfirmedOrders: res.data });
-      return res.data;
-    } catch (error) {
       throw error;
     }
   },
@@ -68,35 +54,6 @@ export const useOrderStore = create((set, get) => ({
     try {
       const res = await api.patch(`/orders/${orderId}/details`, data);
       return res.data;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  
-  
-  confirmOrder: async (id) => {
-    try {
-      const res = await api.patch(`/orders/${id}/confirm`);
-      set({
-        unconfirmedOrders: get().unconfirmedOrders.filter(o => o.order_id !== id),
-        orders: get().orders.map(o => o.order_id === id ? { ...o, ...res.data } : o),
-      });
-      return res.data;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  
-  
-  rejectOrder: async (id) => {
-    try {
-      await api.delete(`/orders/${id}`);
-      set({
-        unconfirmedOrders: get().unconfirmedOrders.filter(o => o.order_id !== id),
-        orders: get().orders.filter(o => o.order_id !== id),
-      });
     } catch (error) {
       throw error;
     }

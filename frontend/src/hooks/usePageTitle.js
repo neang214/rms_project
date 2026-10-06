@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-const BASE_TITLE = "Zoom Garden Café & Wine"
+const BASE_TITLE = "RMS"
 
 export function usePageTitle(pageName) {
   useEffect(() => {

@@ -1,17 +1,18 @@
-import { Search, Pencil, Trash2, Users, Shield, ChefHat, Coffee, DollarSign } from "lucide-react"
-import { IconStatsBar } from "@/components/shared"
+import { Search, Pencil, Trash2, Users, Shield, ChefHat, Coffee, DollarSign, ClipboardList } from "lucide-react"
 import {
   Button, Badge, Card, Input, Label,
   Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from "@/components/ui"
+import { IconStatsBar } from "@/components/shared"
 
 export const roleConfig = {
   admin:   { label: "Admin",   icon: Shield },
   kitchen: { label: "Kitchen", icon: ChefHat },
   barista: { label: "Barista", icon: Coffee },
   cashier: { label: "Cashier", icon: DollarSign },
+  waiter:  { label: "Waiter",  icon: ClipboardList },
 }
 
 const avatarColors = ["bg-[var(--color-primary-muted)] text-[var(--color-primary)]", "bg-[var(--color-info-muted)] text-[var(--color-info)]", "bg-[var(--color-flame-muted)] text-[var(--color-flame)]", "bg-[var(--color-plum-muted)] text-[var(--color-plum)]"]
@@ -22,7 +23,7 @@ export function UserStats({ users, counts }) {
       { label: "Total Users", value: users.length, icon: Users, bg: "bg-[var(--color-primary-muted)]", iconBg: "bg-[var(--color-primary-muted)]", text: "text-[var(--color-primary)]" },
       { label: "Admin", value: counts.admin, icon: Shield, bg: "bg-[var(--color-plum-muted)]", iconBg: "bg-[var(--color-plum-muted)]", text: "text-[var(--color-plum)]" },
       { label: "Kitchen Staff", value: counts.kitchen, icon: ChefHat, bg: "bg-[var(--color-flame-muted)]", iconBg: "bg-[var(--color-flame-muted)]", text: "text-[var(--color-flame)]" },
-      { label: "Service Staff", value: counts.barista + counts.cashier, icon: Coffee, bg: "bg-[var(--color-accent-muted)]", iconBg: "bg-[var(--color-accent-muted)]", text: "text-[var(--color-warning)]" },
+      { label: "Service Staff", value: counts.barista + counts.cashier + counts.waiter, icon: Coffee, bg: "bg-[var(--color-accent-muted)]", iconBg: "bg-[var(--color-accent-muted)]", text: "text-[var(--color-warning)]" },
     ]} />
   )
 }

@@ -62,7 +62,7 @@ export function FormFields({ form, setForm, categories, isEdit, imagePreview, on
       <div className="space-y-1.5">
         <Label>Khmer Name <span className="text-[var(--color-muted)] font-normal">(optional)</span></Label>
         <Input value={form.item_name_km || ""} onChange={e => setForm(f => ({ ...f, item_name_km: e.target.value }))} placeholder="ឈ្មោះជាភាសាខ្មែរ" />
-        <p className="text-[11px] text-[var(--color-muted)]">Shown automatically when a guest or staff member switches to Khmer. Falls back to the English name if left blank.</p>
+        <p className="text-[11px] text-[var(--color-muted)]">Shown automatically when a staff member switches to Khmer. Falls back to the English name if left blank.</p>
       </div>
       <div className="space-y-1.5">
         <Label>Category</Label>

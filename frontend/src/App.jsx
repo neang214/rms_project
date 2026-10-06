@@ -28,15 +28,15 @@ import KitchenMenu from "./pages/kitchen/KitchenMenu"
 import KitchenOrders from "./pages/kitchen/KitchenOrders"
 import KitchenStock from "./pages/kitchen/KitchenStock"
 
-import GuestLanding from "./pages/guest/GuestLanding"
-import GuestOrder from "./pages/guest/GuestOrder"
-import GuestOrderStatus from "./pages/guest/GuestOrderStatus"
+import WaiterMenu from "./pages/waiter/WaiterMenu"
+import WaiterOrders from "./pages/waiter/WaiterOrders"
 
 const roleHome = {
   admin:   "/admin",
   cashier: "/cashier/menu",
   kitchen: "/kitchen/menu",
   barista: "/barista/menu",
+  waiter:  "/waiter/menu",
 }
 
 function isAllowed(role, pathname) {
@@ -45,6 +45,7 @@ function isAllowed(role, pathname) {
     cashier: "/cashier",
     kitchen: "/kitchen",
     barista: "/barista",
+    waiter:  "/waiter",
   }
   const prefix = prefixMap[role]
   if (!prefix) return false
@@ -132,6 +133,10 @@ function StaffApp() {
         <Route path="/barista/stock" element={<ProtectedRoute role={role} allowedRoles={["barista"]}><BaristaStock /></ProtectedRoute>} />
 
         {}
+        <Route path="/waiter/menu" element={<ProtectedRoute role={role} allowedRoles={["waiter"]}><WaiterMenu /></ProtectedRoute>} />
+        <Route path="/waiter/orders" element={<ProtectedRoute role={role} allowedRoles={["waiter"]}><WaiterOrders /></ProtectedRoute>} />
+
+        {}
         <Route path="*" element={<Navigate to={roleHome[role] || "/admin"} replace />} />
 
       </Routes>
@@ -143,15 +148,7 @@ export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <BrowserRouter>
-        <Routes>
-          {}
-          <Route path="/" element={<GuestLanding />} />
-          <Route path="/order" element={<GuestOrder />} />
-          <Route path="/order/status" element={<GuestOrderStatus />} />
-
-          {}
-          <Route path="/*" element={<StaffApp />} />
-        </Routes>
+        <StaffApp />
       </BrowserRouter>
     </ThemeProvider>
   )

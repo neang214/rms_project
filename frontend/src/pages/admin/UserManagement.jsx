@@ -32,7 +32,7 @@ export default function UserManagement() {
     (u.username.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase()))
   )
 
-  const counts = { admin: 0, kitchen: 0, barista: 0, cashier: 0 }
+  const counts = { admin: 0, kitchen: 0, barista: 0, cashier: 0, waiter: 0 }
   users.forEach(u => { if (counts[u.role] !== undefined) counts[u.role]++ })
 
   const openAdd = () => {

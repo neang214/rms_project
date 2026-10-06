@@ -4,38 +4,14 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
   Input, Label, Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from "@/components/ui"
-import { Eye, Pencil, Trash2, QrCode, Printer, RefreshCw } from "lucide-react"
-import TableQRCode, { buildTableOrderUrl } from "../TableQRCode"
-
-export function printElement(elementId) {
-  const el = document.getElementById(elementId)
-  if (!el) return
-  const win = window.open("", "_blank", "width=800,height=600")
-  win.document.write(`
-    <html>
-      <head>
-        <title>Print QR Codes</title>
-        <style>
-          body { font-family: sans-serif; padding: 24px; }
-          .qr-grid { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
-        </style>
-      </head>
-      <body>
-        <div class="qr-grid">${el.innerHTML}</div>
-      </body>
-    </html>
-  `)
-  win.document.close()
-  win.focus()
-  setTimeout(() => { win.print(); win.close() }, 300)
-}
+import { Eye, Pencil, Trash2 } from "lucide-react"
 
 function itemTotal(order) {
   if (!order?.order_items) return 0
   return order.order_items.reduce((sum, oi) => sum + Number(oi.unit_price) * oi.quantity, 0)
 }
 
-export function TablesList({ tables, isLoading, onQr, onView, onEdit, onDelete }) {
+export function TablesList({ tables, isLoading, onView, onEdit, onDelete }) {
   return (
     <Card>
       <div className="p-5 pb-4 border-b border-[var(--color-border)]">
@@ -65,7 +41,6 @@ export function TablesList({ tables, isLoading, onQr, onView, onEdit, onDelete }
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <button onClick={() => onQr(t)} className="p-1.5 rounded-lg hover:bg-[var(--color-primary-muted)] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors"><QrCode size={14} /></button>
                       <button onClick={() => onView(t)} className="p-1.5 rounded-lg hover:bg-[var(--color-info-muted)] text-[var(--color-muted)] hover:text-[var(--color-info)] transition-colors"><Eye size={14} /></button>
                       <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg hover:bg-[var(--color-accent-muted)] text-[var(--color-muted)] hover:text-[var(--color-warning)] transition-colors"><Pencil size={14} /></button>
                       <button onClick={() => onDelete(t.table_id)} className="p-1.5 rounded-lg hover:bg-[var(--color-danger-muted)] text-[var(--color-muted)] hover:text-[var(--color-danger)] transition-colors"><Trash2 size={14} /></button>
@@ -138,7 +113,7 @@ export function TableViewDialog({ table, order, loading, onClose }) {
                 <p className="text-sm text-[var(--color-muted)]">View the active order for this table</p>
               </div>
               <div className="border border-[var(--color-primary)]/40 rounded-lg px-2 py-1">
-                <span className="font-display font-bold text-xs text-[var(--color-primary)]">ZOOM</span>
+                <span className="font-display font-bold text-xs text-[var(--color-primary)]">RMS</span>
               </div>
             </div>
 
@@ -193,50 +168,3 @@ export function TableViewDialog({ table, order, loading, onClose }) {
   )
 }
 
-export function SingleQrDialog({ table, onClose, onRegenerate, regenerating, onPrint }) {
-  return (
-    <Dialog open={!!table} onOpenChange={v => !v && onClose()}>
-      <DialogContent className="max-w-sm">
-        {table && (
-          <>
-            <DialogHeader>
-              <DialogTitle>Table QR Code</DialogTitle>
-              <DialogDescription>Customers scan this to order from {table.table_number}</DialogDescription>
-            </DialogHeader>
-            <div id="single-qr-print" className="flex justify-center py-2">
-              <TableQRCode table={table} size={180} />
-            </div>
-            <div className="text-center text-xs text-[var(--color-muted)] break-all px-2">{buildTableOrderUrl(table)}</div>
-            <div className="flex gap-2 justify-end mt-2">
-              <Button variant="outline" onClick={onClose}>Close</Button>
-              <Button variant="outline" onClick={() => onRegenerate(table.table_id)} disabled={regenerating} className="gap-1.5">
-                <RefreshCw size={14} className={regenerating ? "animate-spin" : ""} /> {regenerating ? "Regenerating..." : "Regenerate QR"}
-              </Button>
-              <Button onClick={() => onPrint("single-qr-print")} className="gap-1.5"><Printer size={14} /> Print</Button>
-            </div>
-          </>
-        )}
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-export function PrintAllQrDialog({ open, onClose, tables, onPrint }) {
-  return (
-    <Dialog open={open} onOpenChange={v => !v && onClose()}>
-      <DialogContent className="max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>All Table QR Codes</DialogTitle>
-          <DialogDescription>Print and place one on each table</DialogDescription>
-        </DialogHeader>
-        <div id="all-qr-print" className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto py-2">
-          {tables.map(t => <TableQRCode key={t.table_id} table={t} size={140} />)}
-        </div>
-        <div className="flex gap-2 justify-end mt-2">
-          <Button variant="outline" onClick={onClose}>Close</Button>
-          <Button onClick={() => onPrint("all-qr-print")} className="gap-1.5"><Printer size={14} /> Print All</Button>
-        </div>
-      </DialogContent>
-    </Dialog>
-  )
-}

@@ -4,7 +4,7 @@ import { useTheme } from "next-themes"
 import {
   LayoutDashboard, UtensilsCrossed, Package, TableIcon,
   CreditCard, Users, Truck, LogOut, Bell, Moon, Sun,
-  Menu as MenuIcon, ChefHat, ShoppingBag, Coffee, Clock, BarChart3
+  Menu as MenuIcon, ChefHat, ShoppingBag, Coffee, Clock, BarChart3, ClipboardList
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { authContext } from "../context/authContext"
@@ -53,6 +53,13 @@ const navByRole = {
     ],
     secondary: [],
   },
+  waiter: {
+    main: [
+      { to: "/waiter/menu", icon: UtensilsCrossed, label: "nav.menu" },
+      { to: "/waiter/orders", icon: ClipboardList, label: "nav.orders" },
+    ],
+    secondary: [],
+  },
 }
 
 const roleInfo = {
@@ -60,9 +67,10 @@ const roleInfo = {
   cashier: { label: "Cashier user", sub: "role.cashier", avatarBg: "bg-[var(--color-primary-muted)]", avatarText: "text-[var(--color-primary)]", badge: "bg-[var(--color-primary-muted)] text-[var(--color-primary)]" },
   kitchen: { label: "Kitchen Staff", sub: "role.kitchen", avatarBg: "bg-[var(--color-flame-muted)]", avatarText: "text-[var(--color-flame)]", badge: "bg-[var(--color-flame-muted)] text-[var(--color-flame)]" },
   barista: { label: "Barista user", sub: "role.barista", avatarBg: "bg-[var(--color-accent-muted)]", avatarText: "text-[var(--color-warning)]", badge: "bg-[var(--color-accent-muted)] text-[var(--color-warning)]" },
+  waiter: { label: "Waiter", sub: "role.waiter", avatarBg: "bg-[var(--color-info-muted)]", avatarText: "text-[var(--color-info)]", badge: "bg-[var(--color-info-muted)] text-[var(--color-info)]" },
 }
 
-const exactEnds = ["/admin", "/cashier/menu", "/kitchen/menu", "/barista/menu"]
+const exactEnds = ["/admin", "/cashier/menu", "/kitchen/menu", "/barista/menu", "/waiter/menu"]
 
 export default function Layout({ children }) {
   const { theme, setTheme } = useTheme()
@@ -94,6 +102,7 @@ export default function Layout({ children }) {
     cashier: "/cashier/orders",
     kitchen: "/kitchen/orders",
     barista: "/barista/orders",
+    waiter: "/waiter/orders",
   }
 
   

@@ -258,7 +258,7 @@ export default function CashierHistory() {
           </style>
         </head>
         <body>
-          <h1>Zoom Garden Café &amp; Wine</h1>
+          <h1>RMS</h1>
           <div class="sub">Order History Report</div>
           <div class="meta">
             <b>${displayDate}</b>${tableLabel ? ` &middot; Table ${tableLabel}` : " &middot; All tables"}

@@ -9,7 +9,6 @@ import { useLang } from "@/i18n/LanguageContext"
 import { PageHeader, StatsBar } from "@/components/shared"
 import ReceiptScanner from "@/components/cashier/ReceiptScanner"
 import { orderTotal } from "@/components/cashier/orderHelpers"
-import UnconfirmedList from "@/components/cashier/UnconfirmedList"
 import ActiveOrdersTable from "@/components/cashier/ActiveOrdersTable"
 import ViewOrderDialog from "@/components/cashier/ViewOrderDialog"
 import PaymentDialog from "@/components/cashier/PaymentDialog"
@@ -17,12 +16,11 @@ import PaymentDialog from "@/components/cashier/PaymentDialog"
 export default function CashierOrders() {
   const { t } = useLang()
   usePageTitle("Order Management")
-  const { orders, fetchOrders, unconfirmedOrders, fetchUnconfirmedOrders, confirmOrder, rejectOrder, isLoading } = useOrderStore()
+  const { orders, fetchOrders, isLoading } = useOrderStore()
   const { paymentMethods, fetchPaymentMethods } = usePaymentStore()
 
   const [payOrder, setPayOrder] = useState(null)
   const [viewOrder, setViewOrder] = useState(null)
-  const [confirmBusyId, setConfirmBusyId] = useState(null)
   const [search, setSearch] = useState("")
   const [scannerOpen, setScannerOpen] = useState(false)
   const [scanError, setScanError] = useState("")
@@ -32,23 +30,18 @@ export default function CashierOrders() {
   useEffect(() => {
     fetchOrders()
     fetchPaymentMethods()
-    fetchUnconfirmedOrders()
-    const interval = setInterval(() => {
-      fetchOrders()
-      fetchUnconfirmedOrders()
-    }, 60000)
+    const interval = setInterval(fetchOrders, 60000)
     return () => clearInterval(interval)
   }, [])
 
-  useSocketEvent("order:new", () => { fetchOrders(); fetchUnconfirmedOrders() })
-  useSocketEvent("order:confirmed", () => { fetchOrders(); fetchUnconfirmedOrders() })
+  useSocketEvent("order:new", () => fetchOrders())
   useSocketEvent("order:status_changed", () => fetchOrders())
-  useSocketEvent("order:deleted", () => { fetchOrders(); fetchUnconfirmedOrders() })
+  useSocketEvent("order:deleted", () => fetchOrders())
   useSocketEvent("order_item:new", () => fetchOrders())
   useSocketEvent("order_item:status_changed", () => fetchOrders())
   useSocketEvent("payment:completed", () => fetchOrders())
 
-  const activeOrders = orders.filter(o => !(o.is_paid ?? o.status === "Paid") && o.confirmed !== false)
+  const activeOrders = orders.filter(o => !(o.is_paid ?? o.status === "Paid"))
 
   
   
@@ -63,10 +56,6 @@ export default function CashierOrders() {
     }
     if (found.is_paid ?? found.status === "Paid") {
       setScanError(`Order #${String(orderId).padStart(4, "0")} has already been paid.`)
-      return
-    }
-    if (found.confirmed === false) {
-      setScanError(`Order #${String(orderId).padStart(4, "0")} hasn't been confirmed yet.`)
       return
     }
     setScanError("")
@@ -110,29 +99,6 @@ export default function CashierOrders() {
     { key: "Pending", label: t("cashier.newOrders"), sub: `${grouped.Pending.length} ${t("cashier.ordersWaiting")}`, accent: "text-[var(--color-text-secondary)]", bar: "bg-[var(--color-muted)]" },
   ]
 
-  const handleConfirmGuestOrder = async (order) => {
-    setConfirmBusyId(order.order_id)
-    try {
-      await confirmOrder(order.order_id)
-      await fetchOrders()
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setConfirmBusyId(null)
-    }
-  }
-
-  const handleRejectGuestOrder = async (order) => {
-    setConfirmBusyId(order.order_id)
-    try {
-      await rejectOrder(order.order_id)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setConfirmBusyId(null)
-    }
-  }
-
   return (
     <div className="space-y-4">
       <PageHeader icon={ShoppingBag} title={t("nav.orders")}
@@ -158,25 +124,6 @@ export default function CashierOrders() {
         <div className="text-sm text-[var(--color-danger)] bg-[var(--color-danger-muted)] border border-[var(--color-danger)]/25 rounded-xl px-3 py-2">{scanError}</div>
       )}
 
-      {}
-      {unconfirmedOrders.length > 0 && (
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-1 h-5 rounded-full bg-[var(--color-warning)]" />
-            <div>
-              <div className="font-semibold text-sm text-[var(--color-warning)]">{t("cashier.awaiting")}</div>
-              <div className="text-[10px] text-[var(--color-muted)]">{unconfirmedOrders.length} guest order{unconfirmedOrders.length !== 1 ? "s" : ""} need review — confirm only if the table really has a customer</div>
-            </div>
-          </div>
-          <UnconfirmedList
-            orders={unconfirmedOrders}
-            onConfirm={handleConfirmGuestOrder}
-            onReject={handleRejectGuestOrder}
-            busyId={confirmBusyId}
-          />
-        </div>
-      )}
-
       {/* Stats bar */}
       <StatsBar columns={5} stats={[
         { label: t("cashier.statActive"), value: stats.active, color: "text-[var(--color-primary)]", bg: "bg-[var(--color-primary-muted)]" },
@@ -188,7 +135,7 @@ export default function CashierOrders() {
 
       {isLoading && activeOrders.length === 0 ? (
         <div className="text-center py-16 text-[var(--color-muted)] text-sm">Loading orders...</div>
-      ) : activeOrders.length === 0 && unconfirmedOrders.length === 0 ? (
+      ) : activeOrders.length === 0 ? (
         <div className="text-center py-16 text-[var(--color-muted)] text-sm">No active orders.</div>
       ) : searchQuery && searchedOrders.length === 0 ? (
         <div className="text-center py-16 text-[var(--color-muted)] text-sm">No active order matches "{searchQuery}".</div>
@@ -214,7 +161,6 @@ export default function CashierOrders() {
       <PaymentDialog
         order={payOrder}
         paymentMethods={paymentMethods}
-        unconfirmedCount={unconfirmedOrders.length}
         onClose={() => setPayOrder(null)}
         onPaid={fetchOrders}
       />

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useLang } from "@/i18n/LanguageContext"
 import { deleteErrorMessage } from "@/lib/utils"
 import { ConfirmModal } from "@/components/shared"
-import { Plus, QrCode, Wifi, WifiOff } from "lucide-react"
+import { Plus, Wifi, WifiOff } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui"
 import { useTableStore } from "../../context/tableContext"
@@ -10,20 +10,17 @@ import { useOrderStore } from "../../context/orderContext"
 import { useSocketRole, useSocketEvent } from "../../services/socket"
 import { usePageTitle } from "../../hooks/usePageTitle"
 import {
-  printElement, TablesList, TableFormDialog, TableViewDialog, SingleQrDialog, PrintAllQrDialog,
+  TablesList, TableFormDialog, TableViewDialog,
 } from "@/components/admin/TablesParts"
 
 export default function Tables() {
   const { t } = useLang()
   usePageTitle("Table")
-  const { tables, fetchTablesWithTokens, createTable, updateTable, deleteTable, regenerateQrToken, isLoading } = useTableStore()
+  const { tables, fetchTables, createTable, updateTable, deleteTable, isLoading } = useTableStore()
   const { getActiveOrderByTable } = useOrderStore()
 
   const [addOpen, setAddOpen] = useState(false)
   const [viewTable, setViewTable] = useState(null)
-  const [qrTable, setQrTable] = useState(null)
-  const [printAllOpen, setPrintAllOpen] = useState(false)
-  const [regenerating, setRegenerating] = useState(false)
   const [viewOrder, setViewOrder] = useState(null)
   const [viewLoading, setViewLoading] = useState(false)
   const [editTable, setEditTable] = useState(null)
@@ -32,15 +29,15 @@ export default function Tables() {
   const [errorMsg, setErrorMsg] = useState("")
 
   useEffect(() => {
-    fetchTablesWithTokens()
+    fetchTables()
   }, [])
 
-  // Real-time: table availability changes (a guest/cashier starts or pays
+  // Real-time: table availability changes (a waiter/cashier starts or pays
   // off an order) reflect here immediately instead of waiting on a poll.
   const { connected } = useSocketRole("admin")
-  useSocketEvent("table:created", () => fetchTablesWithTokens())
-  useSocketEvent("table:updated", () => fetchTablesWithTokens())
-  useSocketEvent("table:deleted", () => fetchTablesWithTokens())
+  useSocketEvent("table:created", () => fetchTables())
+  useSocketEvent("table:updated", () => fetchTables())
+  useSocketEvent("table:deleted", () => fetchTables())
 
   const openAdd = () => {
     setForm({ table_number: "", capacity: "", is_available: true })
@@ -128,20 +125,6 @@ export default function Tables() {
     }
   }
 
-  // Issues a fresh qr_token, invalidating the old printed QR; updates qrTable
-  // in place so the open dialog shows the new code.
-  const handleRegenerateQr = async (id) => {
-    setRegenerating(true)
-    try {
-      const updated = await regenerateQrToken(id)
-      setQrTable(updated)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setRegenerating(false)
-    }
-  }
-
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between flex-wrap gap-3">
@@ -151,13 +134,12 @@ export default function Tables() {
             {connected ? <Wifi size={11} /> : <WifiOff size={11} />}
             {connected ? "Live" : "Reconnecting..."}
           </div>
-          <Button variant="outline" onClick={() => setPrintAllOpen(true)} className="gap-2"><QrCode size={15} /> QR Codes</Button>
           <Button onClick={openAdd} className="gap-2"><Plus size={15} /> New Table</Button>
         </div>
       </div>
 
       <TablesList tables={tables} isLoading={isLoading}
-        onQr={setQrTable} onView={openView} onEdit={openEdit} onDelete={requestDelete} />
+        onView={openView} onEdit={openEdit} onDelete={requestDelete} />
 
       <TableFormDialog
         open={addOpen} onClose={() => setAddOpen(false)}
@@ -175,10 +157,6 @@ export default function Tables() {
 
       <TableViewDialog table={viewTable} order={viewOrder} loading={viewLoading} onClose={() => setViewTable(null)} />
 
-      <SingleQrDialog table={qrTable} onClose={() => setQrTable(null)}
-        onRegenerate={handleRegenerateQr} regenerating={regenerating} onPrint={printElement} />
-
-      <PrintAllQrDialog open={printAllOpen} onClose={() => setPrintAllOpen(false)} tables={tables} onPrint={printElement} />
       <ConfirmModal
         open={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}

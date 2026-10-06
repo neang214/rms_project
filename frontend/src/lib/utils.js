@@ -15,7 +15,7 @@ export function imageUrl(src, fallback = null) {
  * Resolves a menu item's display name for the given language. Falls back
  * to the English name if there's no Khmer translation set (or the item is
  * missing entirely). Used everywhere a menu item name is shown, so it
- * follows whichever language the viewer (guest or staff) has selected.
+ * follows whichever language the staff member viewing it has selected.
  */
 export function menuItemName(item, lang) {
   if (!item) return ""

@@ -19,7 +19,6 @@ export const translations = {
     "common.soldOut": "Sold Out",
     "common.logout": "Log out",
 
-    
     "nav.dashboard": "Dashboard",
     "nav.menu": "Menu",
     "nav.stockMgmt": "Stock Management",
@@ -36,67 +35,12 @@ export const translations = {
     "nav.drinkOrders": "Drink Orders",
     "nav.ingredients": "Ingredients",
 
-    
     "role.admin": "Admin",
     "role.cashier": "Cashier",
     "role.kitchen": "Kitchen",
     "role.barista": "Barista",
+    "role.waiter": "Waiter",
 
-    
-    "guest.welcome": "Welcome!",
-    "guest.scanPrompt": "Scan the QR code on your table to view the menu and place your order.",
-    "guest.tapToScan": "Tap to scan your table's QR code",
-    "guest.trackMyOrder": "Track my order",
-    "guest.staffLogin": "Staff login",
-    "guest.scanTitle": "Scan table QR code",
-    "guest.scanHint": "Point your camera at the QR code on your table",
-    "guest.cameraError": "Couldn't access the camera. Please allow camera permission and try again.",
-    "guest.qrUnreadable": "Couldn't read that QR code. Please ask staff for help.",
-
-    
-    "guest.trackOrder": "Track order",
-    "guest.yourTable": "Your table",
-    "guest.searchMenu": "Search menu...",
-    "guest.noItems": "No menu items available.",
-    "guest.order": "Order",
-    "guest.itemsSelected": "items selected",
-    "guest.confirmTitle": "Confirm Your Order",
-    "guest.table": "Table",
-    "guest.confirmOrder": "Confirm Order",
-    "guest.orderPlaced": "Order Placed!",
-    "guest.submitting": "Submitting...",
-    "guest.submitError": "Failed to submit order. Please try again or ask staff for help.",
-
-    
-    "guest.bannerReceived": "Your order has been received — tap to view",
-    "guest.bannerPreparing": "Your order is being prepared — tap to view",
-    "guest.bannerServed": "Your order is ready! — tap to view",
-    "guest.bannerPaid": "Payment received — thank you!",
-
-    
-    "guest.backToMenu": "Back to menu",
-    "guest.loadingOrder": "Loading your order...",
-    "guest.noActiveOrder": "You don't have an active order yet.",
-    "guest.browseMenu": "Browse the menu",
-    "guest.yourOrder": "Your order",
-    "guest.refresh": "Refresh",
-    "guest.statusReceived": "Order received",
-    "guest.statusPreparing": "Being prepared",
-    "guest.statusServed": "Ready to serve",
-    "guest.statusPaid": "Paid — thank you!",
-
-    
-    "guest.somethingWrong": "Something's not right",
-    "guest.noTable": "No table was specified. Please scan the QR code on your table.",
-    "guest.tableNotFound": "This table couldn't be found. Please scan your table's QR code again.",
-    "guest.backToScan": "Back to scan",
-    "guest.waitingNumber": "Your waiting number",
-    "guest.guests": "Guests",
-    "guest.notePlaceholder": "Note (optional)",
-    "guest.orderNotePlaceholder": "Note for whole order (optional)",
-    "guest.itemsLabel": "Items — tap to add a note per item",
-
-    
     "noteTag.addNote": "Add note",
     "noteTag.itemNoteTitle": "Item note",
     "noteTag.freeTextPlaceholder": "Type a custom note...",
@@ -107,16 +51,6 @@ export const translations = {
     "noteTag.lessSpicy": "Less spicy",
     "noteTag.allergy": "Allergy",
 
-    "guest.locationChecking": "Confirming your location...",
-    "guest.locationCheckingSub": "We need to confirm you're at the café before showing the menu.",
-    "guest.locationRequired": "Location needed",
-    "guest.locationDenied": "Location access was denied. Please allow location access in your browser settings, then try again.",
-    "guest.locationUnavailable": "We couldn't determine your location. Please check your connection and try again.",
-    "guest.locationUnsupported": "Your device doesn't support location services, so we can't confirm you're at the café.",
-    "guest.locationRetry": "Try again",
-    "guest.desktopBlocked": "Please open this page on your phone to order — scan the QR code on your table with your phone's camera.",
-
-    
     "status.pending": "Pending",
     "status.preparing": "Preparing",
     "status.cooking": "Cooking",
@@ -125,7 +59,6 @@ export const translations = {
     "status.served": "Served",
     "status.paid": "Paid",
 
-    
     "common.qty": "Qty",
     "common.done": "Done!",
     "common.updating": "Updating...",
@@ -137,8 +70,6 @@ export const translations = {
     "common.actions": "Actions",
     "common.noMenuItems": "No menu items available.",
 
-    
-    "cashier.awaiting": "Awaiting Confirmation",
     "cashier.statActive": "Active",
     "cashier.readyForPayment": "Ready for Payment",
     "cashier.beingPrepared": "Being Prepared",
@@ -162,9 +93,7 @@ export const translations = {
     "cashier.reject": "Reject",
     "cashier.pay": "Pay",
 
-    
     "pay.totalToCollect": "Total to collect",
-    "pay.needConfirm": "order(s) still need confirmation",
     "pay.cashCard": "Cash / Card",
     "pay.khqr": "KHQR",
     "pay.method": "Payment method",
@@ -184,7 +113,6 @@ export const translations = {
     "pay.exact": "Exact",
     "pay.short": "Short by",
 
-    
     "station.kitchenHeader": "Kitchen Station",
     "station.baristaHeader": "Barista Station",
     "station.kitchenPageTitle": "Kitchen Order",
@@ -212,7 +140,6 @@ export const translations = {
     "station.notEnoughStock": "Not enough stock available",
     "station.confirmTake": "Confirm — take from warehouse",
 
-    
     "ing.good": "Good",
     "ing.lowStock": "Low Stock",
     "ing.outOfStock": "Out of Stock",
@@ -223,7 +150,6 @@ export const translations = {
     "ing.useStock": "Use Stock",
     "ing.useFailed": "Failed to use stock.",
 
-    
     "login.welcomeBack": "Welcome Back",
     "login.tables": "Tables",
     "login.roles": "Roles",
@@ -283,55 +209,7 @@ export const translations = {
     "role.cashier": "បេឡា",
     "role.kitchen": "ផ្ទះបាយ",
     "role.barista": "បារីស្តា",
-
-    "guest.welcome": "សូមស្វាគមន៍!",
-    "guest.scanPrompt": "ស្កេនកូដ QR នៅលើតុរបស់អ្នក ដើម្បីមើលម៉ឺនុយ និងធ្វើការកម្ម៉ង់។",
-    "guest.tapToScan": "ចុចដើម្បីស្កេនកូដ QR នៃតុរបស់អ្នក",
-    "guest.trackMyOrder": "តាមដានការកម្ម៉ង់",
-    "guest.staffLogin": "ចូលសម្រាប់បុគ្គលិក",
-    "guest.scanTitle": "ស្កេនកូដ QR នៃតុ",
-    "guest.scanHint": "តម្រង់កាមេរ៉ាទៅកាន់កូដ QR នៅលើតុរបស់អ្នក",
-    "guest.cameraError": "មិនអាចចូលប្រើកាមេរ៉ាបានទេ។ សូមអនុញ្ញាតការប្រើកាមេរ៉ា រួចព្យាយាមម្តងទៀត។",
-    "guest.qrUnreadable": "មិនអាចអានកូដ QR នេះបានទេ។ សូមសុំជំនួយពីបុគ្គលិក។",
-
-    "guest.trackOrder": "តាមដានកម្ម៉ង់",
-    "guest.yourTable": "តុរបស់អ្នក",
-    "guest.searchMenu": "ស្វែងរកម៉ឺនុយ...",
-    "guest.noItems": "មិនមានម៉ឺនុយទេ។",
-    "guest.order": "កម្ម៉ង់",
-    "guest.itemsSelected": "មុខបានជ្រើស",
-    "guest.confirmTitle": "បញ្ជាក់ការកម្ម៉ង់របស់អ្នក",
-    "guest.table": "តុ",
-    "guest.confirmOrder": "បញ្ជាក់ការកម្ម៉ង់",
-    "guest.orderPlaced": "កម្ម៉ង់ដោយជោគជ័យ!",
-    "guest.submitting": "កំពុងបញ្ជូន...",
-    "guest.submitError": "មិនអាចបញ្ជូនការកម្ម៉ង់បានទេ។ សូមព្យាយាមម្តងទៀត ឬសុំជំនួយពីបុគ្គលិក។",
-
-    "guest.bannerReceived": "ការកម្ម៉ង់របស់អ្នកត្រូវបានទទួល — ចុចដើម្បីមើល",
-    "guest.bannerPreparing": "ការកម្ម៉ង់របស់អ្នកកំពុងរៀបចំ — ចុចដើម្បីមើល",
-    "guest.bannerServed": "ការកម្ម៉ង់របស់អ្នករួចរាល់ហើយ! — ចុចដើម្បីមើល",
-    "guest.bannerPaid": "បានទទួលការបង់ប្រាក់ — សូមអរគុណ!",
-
-    "guest.backToMenu": "ត្រឡប់ទៅម៉ឺនុយ",
-    "guest.loadingOrder": "កំពុងផ្ទុកការកម្ម៉ង់របស់អ្នក...",
-    "guest.noActiveOrder": "អ្នកមិនទាន់មានការកម្ម៉ង់នៅឡើយទេ។",
-    "guest.browseMenu": "មើលម៉ឺនុយ",
-    "guest.yourOrder": "ការកម្ម៉ង់របស់អ្នក",
-    "guest.refresh": "ផ្ទុកឡើងវិញ",
-    "guest.statusReceived": "ទទួលបានកម្ម៉ង់",
-    "guest.statusPreparing": "កំពុងរៀបចំ",
-    "guest.statusServed": "រួចរាល់ហើយ",
-    "guest.statusPaid": "បានបង់ប្រាក់ — អរគុណ!",
-
-    "guest.somethingWrong": "មានបញ្ហាបន្តិច",
-    "guest.noTable": "មិនបានបញ្ជាក់តុទេ។ សូមស្កេនកូដ QR នៅលើតុរបស់អ្នក។",
-    "guest.tableNotFound": "រកតុនេះមិនឃើញទេ។ សូមស្កេនកូដ QR នៃតុរបស់អ្នកម្តងទៀត។",
-    "guest.backToScan": "ត្រឡប់ទៅស្កេន",
-    "guest.waitingNumber": "លេខរង់ចាំរបស់អ្នក",
-    "guest.guests": "ភ្ញៀវ",
-    "guest.notePlaceholder": "កំណត់ចំណាំ (ស្រេចចិត្ត)",
-    "guest.orderNotePlaceholder": "កំណត់ចំណាំសម្រាប់ការកម្ម៉ង់ទាំងមូល (ស្រេចចិត្ត)",
-    "guest.itemsLabel": "មុខម្ហូប — ចុចដើម្បីបន្ថែមចំណាំក្នុងមុខម្ហូបនីមួយៗ",
+    "role.waiter": "អ្នកបម្រើ",
 
     "noteTag.addNote": "បន្ថែមចំណាំ",
     "noteTag.itemNoteTitle": "ចំណាំមុខម្ហូប",
@@ -343,16 +221,6 @@ export const translations = {
     "noteTag.lessSpicy": "ហឹរតិច",
     "noteTag.allergy": "អាលែហ្ស៊ី",
 
-    "guest.locationChecking": "កំពុងបញ្ជាក់ទីតាំងរបស់អ្នក...",
-    "guest.locationCheckingSub": "យើងត្រូវការបញ្ជាក់ថាអ្នកកំពុងនៅភោជនីយដ្ឋាន មុននឹងបង្ហាញម៉ឺនុយ។",
-    "guest.locationRequired": "ត្រូវការទីតាំង",
-    "guest.locationDenied": "ការចូលប្រើទីតាំងត្រូវបានបដិសេធ។ សូមអនុញ្ញាតការចូលប្រើទីតាំងក្នុងកម្មវិធីរុករករបស់អ្នក រួចព្យាយាមម្តងទៀត។",
-    "guest.locationUnavailable": "យើងមិនអាចកំណត់ទីតាំងរបស់អ្នកបានទេ។ សូមពិនិត្យការតភ្ជាប់របស់អ្នក រួចព្យាយាមម្តងទៀត។",
-    "guest.locationUnsupported": "ឧបករណ៍របស់អ្នកមិនគាំទ្រសេវាកម្មទីតាំងទេ ដូច្នេះយើងមិនអាចបញ្ជាក់ថាអ្នកនៅភោជនីយដ្ឋានបានទេ។",
-    "guest.locationRetry": "ព្យាយាមម្តងទៀត",
-    "guest.desktopBlocked": "សូមបើកទំព័រនេះលើទូរស័ព្ទរបស់អ្នកដើម្បីកម្ម៉ង់ — ស្កេនកូដ QR នៅលើតុរបស់អ្នកដោយកាមេរ៉ាទូរស័ព្ទ។",
-
-    
     "status.pending": "រង់ចាំ",
     "status.preparing": "កំពុងរៀបចំ",
     "status.cooking": "កំពុងចម្អិន",
@@ -361,7 +229,6 @@ export const translations = {
     "status.served": "បានបម្រើ",
     "status.paid": "បានបង់ប្រាក់",
 
-    
     "common.qty": "ចំនួន",
     "common.done": "រួចរាល់!",
     "common.updating": "កំពុងធ្វើបច្ចុប្បន្នភាព...",
@@ -373,8 +240,6 @@ export const translations = {
     "common.actions": "សកម្មភាព",
     "common.noMenuItems": "មិនមានម៉ឺនុយទេ។",
 
-    
-    "cashier.awaiting": "រង់ចាំការបញ្ជាក់",
     "cashier.statActive": "សកម្ម",
     "cashier.readyForPayment": "រួចរាល់សម្រាប់បង់ប្រាក់",
     "cashier.beingPrepared": "កំពុងរៀបចំ",
@@ -398,9 +263,7 @@ export const translations = {
     "cashier.reject": "បដិសេធ",
     "cashier.pay": "បង់ប្រាក់",
 
-    
     "pay.totalToCollect": "ចំនួនត្រូវទទួល",
-    "pay.needConfirm": "ការកម្ម៉ង់ត្រូវការបញ្ជាក់",
     "pay.cashCard": "សាច់ប្រាក់ / កាត",
     "pay.khqr": "KHQR",
     "pay.method": "វិធីបង់ប្រាក់",
@@ -420,7 +283,6 @@ export const translations = {
     "pay.exact": "ត្រឹមត្រូវ",
     "pay.short": "ខ្វះ",
 
-    
     "station.kitchenHeader": "ស្ថានីយ៍ផ្ទះបាយ",
     "station.baristaHeader": "ស្ថានីយ៍បារីស្តា",
     "station.kitchenPageTitle": "ការកម្ម៉ង់ផ្ទះបាយ",
@@ -448,7 +310,6 @@ export const translations = {
     "station.notEnoughStock": "ស្តុកមិនគ្រប់គ្រាន់",
     "station.confirmTake": "បញ្ជាក់ — យកពីឃ្លាំង",
 
-    
     "ing.good": "ល្អ",
     "ing.lowStock": "ស្តុកតិច",
     "ing.outOfStock": "អស់ស្តុក",
@@ -459,7 +320,6 @@ export const translations = {
     "ing.useStock": "ប្រើស្តុក",
     "ing.useFailed": "ប្រើស្តុកមិនបានសម្រេច។",
 
-    
     "login.welcomeBack": "សូមស្វាគមន៍ត្រឡប់មកវិញ",
     "login.tables": "តុ",
     "login.roles": "តួនាទី",
@@ -498,55 +358,6 @@ export const translations = {
     "common.all": "全部",
     "common.soldOut": "售罄",
 
-    "guest.welcome": "欢迎!",
-    "guest.scanPrompt": "扫描餐桌上的二维码以查看菜单并下单。",
-    "guest.tapToScan": "点击扫描餐桌二维码",
-    "guest.trackMyOrder": "查询我的订单",
-    "guest.staffLogin": "员工登录",
-    "guest.scanTitle": "扫描餐桌二维码",
-    "guest.scanHint": "将相机对准餐桌上的二维码",
-    "guest.cameraError": "无法访问相机。请允许相机权限后重试。",
-    "guest.qrUnreadable": "无法识别该二维码。请向员工求助。",
-
-    "guest.trackOrder": "查询订单",
-    "guest.yourTable": "您的餐桌",
-    "guest.searchMenu": "搜索菜单...",
-    "guest.noItems": "暂无菜品。",
-    "guest.order": "下单",
-    "guest.itemsSelected": "项已选",
-    "guest.confirmTitle": "确认您的订单",
-    "guest.table": "餐桌",
-    "guest.confirmOrder": "确认下单",
-    "guest.orderPlaced": "下单成功!",
-    "guest.submitting": "提交中...",
-    "guest.submitError": "下单失败。请重试或向员工求助。",
-
-    "guest.bannerReceived": "已收到您的订单 — 点击查看",
-    "guest.bannerPreparing": "正在准备您的订单 — 点击查看",
-    "guest.bannerServed": "您的订单已就绪! — 点击查看",
-    "guest.bannerPaid": "已收到付款 — 谢谢!",
-
-    "guest.backToMenu": "返回菜单",
-    "guest.loadingOrder": "正在加载您的订单...",
-    "guest.noActiveOrder": "您还没有进行中的订单。",
-    "guest.browseMenu": "浏览菜单",
-    "guest.yourOrder": "您的订单",
-    "guest.refresh": "刷新",
-    "guest.statusReceived": "已收到订单",
-    "guest.statusPreparing": "正在准备",
-    "guest.statusServed": "可以上菜",
-    "guest.statusPaid": "已付款 — 谢谢!",
-
-    "guest.somethingWrong": "出了点问题",
-    "guest.noTable": "未指定餐桌。请扫描餐桌上的二维码。",
-    "guest.tableNotFound": "找不到此餐桌。请重新扫描餐桌二维码。",
-    "guest.backToScan": "返回扫描",
-    "guest.waitingNumber": "您的等候号码",
-    "guest.guests": "人数",
-    "guest.notePlaceholder": "备注（可选）",
-    "guest.orderNotePlaceholder": "整单备注（可选）",
-    "guest.itemsLabel": "菜品 — 点击可为单个菜品添加备注",
-
     "noteTag.addNote": "添加备注",
     "noteTag.itemNoteTitle": "菜品备注",
     "noteTag.freeTextPlaceholder": "输入自定义备注...",
@@ -557,13 +368,5 @@ export const translations = {
     "noteTag.lessSpicy": "少辣",
     "noteTag.allergy": "过敏",
 
-    "guest.locationChecking": "正在确认您的位置...",
-    "guest.locationCheckingSub": "在显示菜单之前，我们需要确认您在店内。",
-    "guest.locationRequired": "需要位置信息",
-    "guest.locationDenied": "位置访问被拒绝。请在浏览器设置中允许位置访问，然后重试。",
-    "guest.locationUnavailable": "无法确定您的位置。请检查网络连接后重试。",
-    "guest.locationUnsupported": "您的设备不支持位置服务，无法确认您在店内。",
-    "guest.locationRetry": "重试",
-    "guest.desktopBlocked": "请在手机上打开此页面下单——用手机摄像头扫描餐桌上的二维码。",
   },
 }
