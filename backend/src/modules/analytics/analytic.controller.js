@@ -73,10 +73,11 @@ export const getTopSelling = async (req, res) => {
       topSell.map(async (item) => {
         const menuItem = await prisma.menuItem.findUnique({
           where: { menu_item_id: item.menu_item_id },
-          select: { item_name: true },
+          select: { item_name: true, image_url: true },
         });
         return {
           item_name: menuItem.item_name,
+          image_url: menuItem.image_url,
           total_quantity: item._sum.quantity,
         };
       }),
