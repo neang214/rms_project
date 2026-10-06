@@ -1,6 +1,5 @@
 import prisma from "../../utils/db.js";
 import { getIO } from "../../sockets/index.js";
-import { verifyGuestLocation } from "../../utils/geo.js";
 import { getQueueNumber, attachQueueNumbers } from "../../utils/queueNumber.js";
 
 export const getAllOrders = async (req, res) => {
@@ -96,107 +95,18 @@ export const getActiveOrderByTable = async (req, res) => {
   }
 };
 
-// Guest-only equivalent of getActiveOrderByTable — table_id comes from the
-// verified session (req.guestSession), never from a client-supplied param,
-// so a guest can only ever look up their own table's order.
-export const getActiveOrderBySession = async (req, res) => {
-  try {
-    const result = await findActiveOrderForTable(req.guestSession.table_id);
-    res.json(result);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
-
-export const getUnconfirmedOrders = async (req, res) => {
-  try {
-    const orders = await prisma.order.findMany({
-      where: {
-        confirmed: false,
-        status: { not: "Paid" },
-      },
-      include: {
-        table: { select: { table_number: true } },
-        order_items: {
-          include: {
-            menu_item: { select: { item_name: true, price: true } },
-          },
-        },
-      },
-      orderBy: { order_date: "asc" },
-    });
-    res.json(orders);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
-
-// Guest-only route (see order.route.js) — req.guestSession is always
-// present here. table_id comes from the session, never the client, and
-// must match the order being edited; edits are blocked once the cashier
-// has confirmed the order, so a guest can't rewrite party_size/note on
-// an order staff already reviewed and sent to production.
-export const updateOrderDetails = async (req, res) => {
-  const { party_size, note } = req.body;
-  try {
-    const order = await prisma.order.findUnique({
-      where: { order_id: parseInt(req.params.id) },
-      select: { table_id: true, confirmed: true },
-    });
-
-    if (!order) return res.status(404).json({ message: "Order not found" });
-
-    if (order.table_id !== req.guestSession.table_id) {
-      return res.status(403).json({ message: "This order does not belong to this table" });
-    }
-    if (order.confirmed) {
-      return res.status(403).json({ message: "This order has already been confirmed" });
-    }
-
-    const updated = await prisma.order.update({
-      where: { order_id: parseInt(req.params.id) },
-      data: {
-        ...(party_size !== undefined ? { party_size: party_size ? parseInt(party_size) : null } : {}),
-        ...(note !== undefined ? { note: note ? String(note).slice(0, 1000) : null } : {}),
-      },
-    });
-    res.json(updated);
-  } catch (error) {
-    if (error.code === "P2025")
-      return res.status(404).json({ message: "Order not found" });
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
 export const createOrder = async (req, res) => {
-  const { table_id, note, party_size, channel, latitude, longitude } = req.body;
+  const { table_id, note, party_size } = req.body;
 
-  const isGuest = channel === "guest";
-
-  if (!isGuest && !table_id) {
+  if (!table_id) {
     return res.status(400).json({ message: "table_id is required" });
   }
 
-  if (isGuest) {
-    const check = verifyGuestLocation(latitude, longitude);
-    if (!check.ok) return res.status(check.status).json({ message: check.message });
-  }
-
   try {
-    // req.guestSession is attached by requireGuestSessionIfGuestChannel
-    // and already proves this device holds a valid, unexpired session for
-    // this specific table — no separate qr_token lookup needed here.
-    const table = isGuest
-      ? await prisma.table.findUnique({
-          where: { table_id: req.guestSession.table_id },
-          select: { table_id: true, table_number: true },
-        })
-      : await prisma.table.findUnique({
-          where: { table_id: parseInt(table_id) },
-          select: { table_id: true, table_number: true },
-        });
+    const table = await prisma.table.findUnique({
+      where: { table_id: parseInt(table_id) },
+      select: { table_id: true, table_number: true },
+    });
 
     if (!table)
       return res.status(404).json({ message: "Table not found" });
@@ -232,7 +142,6 @@ export const createOrder = async (req, res) => {
             user_id:   req.user?.userId ?? null,
             note:      note ? String(note).slice(0, 1000) : null,
             party_size: party_size ? parseInt(party_size) : null,
-            confirmed: !isGuest,
           },
           include: {
             table: { select: { table_number: true } },
@@ -275,39 +184,6 @@ export const createOrder = async (req, res) => {
 
     res.status(201).json({ ...order, queue_number });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
-
-export const confirmOrder = async (req, res) => {
-  try {
-    const order = await prisma.order.update({
-      where: { order_id: parseInt(req.params.id) },
-      data:  { confirmed: true },
-      include: {
-        table: { select: { table_number: true } },
-        order_items: {
-          include: { menu_item: { select: { item_name: true, category: { select: { type: true } } } } },
-        },
-      },
-    });
-
-    const io = getIO();
-    io.to("role:cashier").to("role:server").emit("order:confirmed", order);
-
-    
-    
-    
-    const hasFood  = order.order_items.some(oi => oi.menu_item?.category?.type === "food");
-    const hasDrink = order.order_items.some(oi => oi.menu_item?.category?.type === "drink");
-    if (hasFood)  io.to("role:kitchen").emit("order:new", order);
-    if (hasDrink) io.to("role:barista").emit("order:new", order);
-
-    res.json(order);
-  } catch (error) {
-    if (error.code === "P2025")
-      return res.status(404).json({ message: "Order not found" });
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
   }

@@ -1,12 +1,21 @@
 import express from "express";
 import { authenticate } from "../../middleware/authenticate.js";
 import { authorize } from "../../middleware/authorize.js";
-import { guestOrderLimiter } from "../../middleware/rateLimiter.js";
+import { writeRateLimiter } from "../../middleware/rateLimiter.js";
 import * as orderItemController from "./orderItem.controller.js";
 
 const router = express.Router();
 
-router.post("/", guestOrderLimiter, orderItemController.addItem);
+// SECURITY FIX: this had no auth middleware at all — addItem's old guest
+// branch checked req.guestSession internally, but the staff path ran with
+// no verification whatsoever. Staff are the only callers now.
+router.post(
+  "/",
+  writeRateLimiter,
+  authenticate,
+  authorize("admin", "cashier", "server"),
+  orderItemController.addItem,
+);
 
 router.get(
   "/queue/kitchen",

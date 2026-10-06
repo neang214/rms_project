@@ -1,6 +1,6 @@
 import rateLimit from "express-rate-limit";
 
-export const guestOrderLimiter = rateLimit({
+export const writeRateLimiter = rateLimit({
   windowMs: 60 * 1000, 
   max: 20,             
   standardHeaders: true,

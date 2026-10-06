@@ -1,13 +1,15 @@
 import express from "express";
 import { authorize } from "../../middleware/authorize.js";
 import { authenticate } from "../../middleware/authenticate.js";
-import { guestOrderLimiter } from "../../middleware/rateLimiter.js";
 import * as tableController from "./table.controller.js";
 
 const router = express.Router();
 
-router.get("/", tableController.getAllTables);
-router.get("/:id", tableController.getTable);
+// Tightened: this is a fully internal staff tool now that guest ordering
+// is gone, so there's no more legitimate public/unauthenticated caller —
+// any logged-in staff role can list/view tables.
+router.get("/", authenticate, tableController.getAllTables);
+router.get("/:id", authenticate, tableController.getTable);
 
 router.get(
     "/admin/all",
@@ -15,8 +17,6 @@ router.get(
     authorize("admin"),
     tableController.getAllTablesAdmin,
 );
-
-router.get("/qr/:token", guestOrderLimiter, tableController.getTableByToken);
 
 router.post("/", authenticate, authorize("admin"), tableController.createTable);
 router.put(
@@ -30,13 +30,6 @@ router.patch(
     authenticate,
     authorize("cashier"),
     tableController.updateTableStatus,
-);
-
-router.patch(
-    "/:id/regenerate-qr",
-    authenticate,
-    authorize("admin"),
-    tableController.regenerateQrToken,
 );
 
 router.delete(

@@ -1,5 +1,4 @@
 import prisma from "../../utils/db.js";
-import { verifyGuestLocation } from "../../utils/geo.js";
 import { getIO } from "../../sockets/index.js";
 import { attachQueueNumbers } from "../../utils/queueNumber.js";
 
@@ -10,7 +9,6 @@ const getQueue = async (type) => {
       menu_item: {
         category: { type },
       },
-      order: { confirmed: true },
     },
     include: {
       menu_item: {
@@ -80,9 +78,7 @@ export const getBaristaQueue = async (req, res) => {
 };
 
 export const addItem = async (req, res) => {
-  const { order_id, menu_item_id, quantity, note, channel, latitude, longitude } = req.body;
-
-  const isGuest = channel === "guest";
+  const { order_id, menu_item_id, quantity, note } = req.body;
 
   if (!order_id || !menu_item_id || quantity === undefined) {
     return res.status(400).json({
@@ -98,26 +94,14 @@ export const addItem = async (req, res) => {
     return res.status(400).json({ message: "quantity must be between 1 and 50" });
   }
 
-  if (isGuest) {
-    const check = verifyGuestLocation(latitude, longitude);
-    if (!check.ok) return res.status(check.status).json({ message: check.message });
-  }
-
   try {
     const order = await prisma.order.findUnique({
       where: { order_id: parsedOrderId },
-      select: { order_id: true, status: true, confirmed: true, table_id: true },
+      select: { order_id: true, status: true, table_id: true },
     });
 
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
-    }
-
-    // req.guestSession is attached by requireGuestSessionIfGuestChannel
-    // and already proves this device holds a valid session for a specific
-    // table — just compare it to the order being modified.
-    if (isGuest && order.table_id !== req.guestSession.table_id) {
-      return res.status(403).json({ message: "This order does not belong to this table" });
     }
 
     if (order.status === "Paid") {
@@ -158,12 +142,10 @@ export const addItem = async (req, res) => {
     io.to("role:cashier").to("role:server").emit("order_item:new", orderItem);
     io.to(`table:${order.table_id}`).emit("order_item:new", orderItem);
 
-    if (order.confirmed) {
-      if (menuItem.category?.type === "food") {
-        io.to("role:kitchen").emit("order_item:new", orderItem);
-      } else if (menuItem.category?.type === "drink") {
-        io.to("role:barista").emit("order_item:new", orderItem);
-      }
+    if (menuItem.category?.type === "food") {
+      io.to("role:kitchen").emit("order_item:new", orderItem);
+    } else if (menuItem.category?.type === "drink") {
+      io.to("role:barista").emit("order_item:new", orderItem);
     }
 
     res.status(201).json(orderItem);

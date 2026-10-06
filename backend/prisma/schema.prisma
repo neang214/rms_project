@@ -83,41 +83,15 @@ model Table {
   table_number String  @unique @db.VarChar(20)
   capacity     Int
   is_available Boolean @default(true)
-  qr_token     String  @unique @db.VarChar(64)
-  // Unguessable per-table token used in QR codes instead of the sequential
-  // table_id, so scanning the real printed QR is the only practical way
-  // for a guest to land on a real table's order page.
 
   // Relations
   orders Order[]
-  guest_sessions GuestSession[]
 
   @@map("tables")
 }
 
-// ============================================================
-// GUEST SESSIONS
-// Issued once when a guest scans a table's QR code. All subsequent
-// guest API calls carry this session's token instead of resending the
-// QR token or a client-supplied table_id, so the server always derives
-// table_id from a verified, expiring session rather than trusting
-// whatever the request body claims.
-// ============================================================
-
-model GuestSession {
-  session_id Int      @id @default(autoincrement())
-  token_hash String   @unique @db.VarChar(64)
-  // SHA-256 hex digest of the raw 256-bit session token. Only the hash
-  // is ever persisted — the raw token is returned to the guest once, at
-  // creation, the same way a password reset token is handled.
-  table_id   Int
-  table      Table    @relation(fields: [table_id], references: [table_id])
-  created_at DateTime @default(now())
-  expires_at DateTime
-
-  @@index([expires_at])
-  @@map("guest_sessions")
-}
+// (GuestSession model removed — guest self-ordering was retired; see
+// migration sql/guest_removal_and_server_role.sql)
 
 // ============================================================
 // MENU CATEGORIES
@@ -168,14 +142,7 @@ model Order {
   note       String?     @db.Text
   party_size Int?        // number of customers, optionally set when the order is created — helps the kitchen gauge prep quantity
   table_id   Int
-  user_id    Int?        // null = guest
-  confirmed  Boolean     @default(true)
-  // Guest orders (user_id null) are created with confirmed = false by
-  // createOrder — see order.controller.js. Staff-placed orders stay true
-  // since there's no anonymity to verify. Kitchen/barista queues only
-  // pull confirmed = true items, so an unconfirmed guest order never
-  // reaches the kitchen until a cashier approves it (the prank/ghost
-  // order confirmation gate).
+  user_id    Int?        // the staff member (cashier/server/admin) who placed it
 
   // Relations
   table       Table       @relation(fields: [table_id], references: [table_id])

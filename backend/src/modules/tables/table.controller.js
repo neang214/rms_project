@@ -1,8 +1,5 @@
-import crypto from "crypto";
 import prisma from "../../utils/db.js";
 import { getIO } from "../../sockets/index.js";
-
-const generateQrToken = () => crypto.randomBytes(24).toString("hex");
 
 export const getAllTables = async (req, res) => {
   try {
@@ -52,20 +49,6 @@ export const getTable = async (req, res) => {
   }
 };
 
-export const getTableByToken = async (req, res) => {
-  try {
-    const table = await prisma.table.findUnique({
-      where: { qr_token: req.params.token },
-    });
-
-    if (!table) return res.status(404).json({ message: "Table not found" });
-    res.status(200).json(table);
-  } catch (error) {
-    console.error("getTableByToken error:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
-
 export const createTable = async (req, res) => {
   const { table_number, capacity, is_available } = req.body;
   try {
@@ -74,35 +57,16 @@ export const createTable = async (req, res) => {
         table_number,
         capacity: parseInt(capacity),
         is_available: is_available ?? true,
-        qr_token: generateQrToken(),
       },
     });
 
     const io = getIO();
-    
-    
-    
-    const { qr_token, ...safeTable } = table;
-    io.to("role:admin").to("role:cashier").emit("table:created", safeTable);
+    io.to("role:admin").to("role:cashier").to("role:server").emit("table:created", table);
 
     res.status(201).json(table);
   } catch (error) {
     if (error.code === "P2002")
       return res.status(400).json({ message: "Table number already exists" });
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-export const regenerateQrToken = async (req, res) => {
-  try {
-    const table = await prisma.table.update({
-      where: { table_id: parseInt(req.params.id) },
-      data: { qr_token: generateQrToken() },
-    });
-    res.status(200).json(table);
-  } catch (error) {
-    if (error.code === "P2025")
-      return res.status(404).json({ message: "Table not found" });
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -120,8 +84,7 @@ export const updateTable = async (req, res) => {
     });
 
     const io = getIO();
-    const { qr_token, ...safeTable } = table;
-    io.to("role:admin").to("role:cashier").emit("table:updated", safeTable);
+    io.to("role:admin").to("role:cashier").to("role:server").emit("table:updated", table);
 
     res.status(200).json(table);
   } catch (error) {
@@ -140,8 +103,7 @@ export const updateTableStatus = async (req, res) => {
     });
 
     const io = getIO();
-    const { qr_token, ...safeTable } = table;
-    io.to("role:admin").to("role:cashier").emit("table:updated", safeTable);
+    io.to("role:admin").to("role:cashier").to("role:server").emit("table:updated", table);
 
     res.json({ message: "Table updated" });
   } catch (error) {
@@ -159,7 +121,7 @@ export const deleteTable = async (req, res) => {
     });
 
     const io = getIO();
-    io.to("role:admin").to("role:cashier").emit("table:deleted", { table_id: tableId });
+    io.to("role:admin").to("role:cashier").to("role:server").emit("table:deleted", { table_id: tableId });
 
     res.status(200).json({ message: "Table deleted successfully" });
   } catch (error) {
