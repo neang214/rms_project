@@ -7,13 +7,21 @@ export const periods = ["Daily", "Weekly", "Monthly"]
 
 export const orderTotal = (order) => order.order_items?.reduce((sum, oi) => sum + Number(oi.unit_price) * oi.quantity, 0) || 0
 
-export function PaymentStats({ orders, todaysPayments, todaysRevenue }) {
+// scope="admin" (default) shows company-wide lifetime revenue — a figure
+// that belongs with admin's financial oversight, not a cashier's shift
+// view. scope="cashier" swaps it for Active Orders, something actually
+// relevant to the person working the till right now.
+export function PaymentStats({ orders, todaysPayments, todaysRevenue, scope = "admin" }) {
+  const fourthStat = scope === "cashier"
+    ? { label: "Active Orders", value: orders.filter(o => o.status !== "Paid").length, icon: ShoppingCart, bg: "bg-[var(--color-plum-muted)]", iconBg: "bg-[var(--color-plum-muted)]", text: "text-[var(--color-plum)]" }
+    : { label: "Total Revenue (All Time)", value: `$${orders.filter(o => o.status === "Paid").reduce((s, o) => s + orderTotal(o), 0).toFixed(2)}`, icon: DollarSign, bg: "bg-[var(--color-plum-muted)]", iconBg: "bg-[var(--color-plum-muted)]", text: "text-[var(--color-plum)]" }
+
   return (
     <IconStatsBar columns={4} stats={[
       { label: "Total Orders", value: orders.length, icon: ShoppingCart, bg: "bg-[var(--color-primary-muted)]", iconBg: "bg-[var(--color-primary-muted)]", text: "text-[var(--color-primary)]" },
       { label: "Today's Payments", value: todaysPayments.length, icon: Receipt, bg: "bg-[var(--color-accent-muted)]", iconBg: "bg-[var(--color-accent-muted)]", text: "text-[var(--color-accent)]" },
       { label: "Today's Revenue", value: `$${todaysRevenue.toFixed(2)}`, icon: TrendingUp, bg: "bg-[var(--color-info-muted)]", iconBg: "bg-[var(--color-info-muted)]", text: "text-[var(--color-info)]" },
-      { label: "Total Revenue (All Time)", value: `$${orders.filter(o => o.status === "Paid").reduce((s, o) => s + orderTotal(o), 0).toFixed(2)}`, icon: DollarSign, bg: "bg-[var(--color-plum-muted)]", iconBg: "bg-[var(--color-plum-muted)]", text: "text-[var(--color-plum)]" },
+      fourthStat,
     ]} />
   )
 }

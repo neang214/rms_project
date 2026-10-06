@@ -24,7 +24,6 @@ export const translations = {
     "nav.stockMgmt": "Stock Management",
     "nav.stock": "Stock",
     "nav.tables": "Table",
-    "nav.payments": "Payment & Report",
     "nav.reports": "Reports",
     "nav.paymentsOnly": "Payments",
     "nav.history": "Order History",
@@ -39,7 +38,7 @@ export const translations = {
     "role.cashier": "Cashier",
     "role.kitchen": "Kitchen",
     "role.barista": "Barista",
-    "role.waiter": "Waiter",
+    "role.server": "Waiter",
 
     "noteTag.addNote": "Add note",
     "noteTag.itemNoteTitle": "Item note",
@@ -189,7 +188,6 @@ export const translations = {
     "nav.stockMgmt": "គ្រប់គ្រងស្តុក",
     "nav.stock": "ស្តុក",
     "nav.tables": "តុ",
-    "nav.payments": "ការបង់ប្រាក់ និងរបាយការណ៍",
     "nav.reports": "របាយការណ៍",
     "nav.paymentsOnly": "ការបង់ប្រាក់",
     "nav.history": "ប្រវត្តិការកម្ម៉ង់",
@@ -204,7 +202,7 @@ export const translations = {
     "role.cashier": "បេឡា",
     "role.kitchen": "ផ្ទះបាយ",
     "role.barista": "បារីស្តា",
-    "role.waiter": "អ្នកបម្រើ",
+    "role.server": "អ្នកបម្រើ",
 
     "noteTag.addNote": "បន្ថែមចំណាំ",
     "noteTag.itemNoteTitle": "ចំណាំមុខម្ហូប",

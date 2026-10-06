@@ -6,8 +6,8 @@ const FALLBACK_IMG = "https://images.unsplash.com/photo-1569718212165-3a8278d5f6
 
 function MenuItemCard({ item, qty, onAdd, onRemove, lang }) {
   return (
-    <div className="bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden hover:shadow-md transition-all group relative">
-      <div className="relative h-32 overflow-hidden bg-[var(--color-border)]">
+    <div className="bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] overflow-hidden hover:shadow-md transition-all group relative">
+      <div className="relative aspect-square overflow-hidden bg-[var(--color-border)]">
         <img src={imageUrl(item.image_url, FALLBACK_IMG)} alt={menuItemName(item, lang)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
       </div>
       <div className="p-2.5">
@@ -41,7 +41,7 @@ export default function CashierMenuGrid({ items, cart, onAdd, onRemove }) {
     return <div className="text-center py-16 text-[var(--color-muted)] text-sm">{t("common.noMenuItems")}</div>
   }
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
       {items.map(item => (
         <MenuItemCard
           key={item.menu_item_id}

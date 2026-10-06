@@ -32,7 +32,8 @@ const navByRole = {
     main: [
       { to: "/cashier/menu", icon: UtensilsCrossed, label: "nav.menu" },
       { to: "/cashier/orders", icon: ShoppingBag, label: "nav.orders" },
-      { to: "/cashier/payments", icon: CreditCard, label: "nav.payments" },
+      { to: "/cashier/payments", icon: CreditCard, label: "nav.paymentsOnly" },
+      { to: "/cashier/reports", icon: BarChart3, label: "nav.reports" },
       { to: "/cashier/history", icon: Clock, label: "nav.history" },
     ],
     secondary: [],
@@ -53,10 +54,10 @@ const navByRole = {
     ],
     secondary: [],
   },
-  waiter: {
+  server: {
     main: [
-      { to: "/waiter/menu", icon: UtensilsCrossed, label: "nav.menu" },
-      { to: "/waiter/orders", icon: ClipboardList, label: "nav.orders" },
+      { to: "/server/menu", icon: UtensilsCrossed, label: "nav.menu" },
+      { to: "/server/orders", icon: ClipboardList, label: "nav.orders" },
     ],
     secondary: [],
   },
@@ -67,10 +68,10 @@ const roleInfo = {
   cashier: { label: "Cashier user", sub: "role.cashier", avatarBg: "bg-[var(--color-primary-muted)]", avatarText: "text-[var(--color-primary)]", badge: "bg-[var(--color-primary-muted)] text-[var(--color-primary)]" },
   kitchen: { label: "Kitchen Staff", sub: "role.kitchen", avatarBg: "bg-[var(--color-flame-muted)]", avatarText: "text-[var(--color-flame)]", badge: "bg-[var(--color-flame-muted)] text-[var(--color-flame)]" },
   barista: { label: "Barista user", sub: "role.barista", avatarBg: "bg-[var(--color-accent-muted)]", avatarText: "text-[var(--color-warning)]", badge: "bg-[var(--color-accent-muted)] text-[var(--color-warning)]" },
-  waiter: { label: "Waiter", sub: "role.waiter", avatarBg: "bg-[var(--color-info-muted)]", avatarText: "text-[var(--color-info)]", badge: "bg-[var(--color-info-muted)] text-[var(--color-info)]" },
+  server: { label: "Waiter", sub: "role.server", avatarBg: "bg-[var(--color-info-muted)]", avatarText: "text-[var(--color-info)]", badge: "bg-[var(--color-info-muted)] text-[var(--color-info)]" },
 }
 
-const exactEnds = ["/admin", "/cashier/menu", "/kitchen/menu", "/barista/menu", "/waiter/menu"]
+const exactEnds = ["/admin", "/cashier/menu", "/kitchen/menu", "/barista/menu", "/server/menu"]
 
 export default function Layout({ children }) {
   const { theme, setTheme } = useTheme()
@@ -102,7 +103,7 @@ export default function Layout({ children }) {
     cashier: "/cashier/orders",
     kitchen: "/kitchen/orders",
     barista: "/barista/orders",
-    waiter: "/waiter/orders",
+    server: "/server/orders",
   }
 
   

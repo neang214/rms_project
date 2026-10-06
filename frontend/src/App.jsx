@@ -11,7 +11,8 @@ import Stock from "./pages/admin/Stock"
 import Tables from "./pages/admin/Tables"
 import Payments from "./pages/admin/Payments"
 import Reports from "./pages/admin/Reports"
-import CashierPaymentsReport from "./pages/cashier/PaymentsReport"
+import CashierPayments from "./pages/cashier/Payments"
+import CashierReports from "./pages/cashier/Reports"
 import Suppliers from "./pages/admin/Suppliers"
 import UserManagement from "./pages/admin/UserManagement"
 import OrderHistory from "./pages/admin/OrderHistory"
@@ -28,15 +29,15 @@ import KitchenMenu from "./pages/kitchen/KitchenMenu"
 import KitchenOrders from "./pages/kitchen/KitchenOrders"
 import KitchenStock from "./pages/kitchen/KitchenStock"
 
-import WaiterMenu from "./pages/waiter/WaiterMenu"
-import WaiterOrders from "./pages/waiter/WaiterOrders"
+import ServerMenu from "./pages/server/ServerMenu"
+import ServerOrders from "./pages/server/ServerOrders"
 
 const roleHome = {
   admin:   "/admin",
   cashier: "/cashier/menu",
   kitchen: "/kitchen/menu",
   barista: "/barista/menu",
-  waiter:  "/waiter/menu",
+  server:  "/server/menu",
 }
 
 function isAllowed(role, pathname) {
@@ -45,7 +46,7 @@ function isAllowed(role, pathname) {
     cashier: "/cashier",
     kitchen: "/kitchen",
     barista: "/barista",
-    waiter:  "/waiter",
+    server:  "/server",
   }
   const prefix = prefixMap[role]
   if (!prefix) return false
@@ -119,7 +120,8 @@ function StaffApp() {
         {}
         <Route path="/cashier/menu" element={<ProtectedRoute role={role} allowedRoles={["cashier"]}><CashierMenu /></ProtectedRoute>} />
         <Route path="/cashier/orders" element={<ProtectedRoute role={role} allowedRoles={["cashier"]}><CashierOrders /></ProtectedRoute>} />
-        <Route path="/cashier/payments" element={<ProtectedRoute role={role} allowedRoles={["cashier"]}><CashierPaymentsReport /></ProtectedRoute>} />
+        <Route path="/cashier/payments" element={<ProtectedRoute role={role} allowedRoles={["cashier"]}><CashierPayments /></ProtectedRoute>} />
+        <Route path="/cashier/reports" element={<ProtectedRoute role={role} allowedRoles={["cashier"]}><CashierReports /></ProtectedRoute>} />
         <Route path="/cashier/history" element={<ProtectedRoute role={role} allowedRoles={["cashier"]}><CashierHistory /></ProtectedRoute>} />
 
         {}
@@ -133,8 +135,8 @@ function StaffApp() {
         <Route path="/barista/stock" element={<ProtectedRoute role={role} allowedRoles={["barista"]}><BaristaStock /></ProtectedRoute>} />
 
         {}
-        <Route path="/waiter/menu" element={<ProtectedRoute role={role} allowedRoles={["waiter"]}><WaiterMenu /></ProtectedRoute>} />
-        <Route path="/waiter/orders" element={<ProtectedRoute role={role} allowedRoles={["waiter"]}><WaiterOrders /></ProtectedRoute>} />
+        <Route path="/server/menu" element={<ProtectedRoute role={role} allowedRoles={["server"]}><ServerMenu /></ProtectedRoute>} />
+        <Route path="/server/orders" element={<ProtectedRoute role={role} allowedRoles={["server"]}><ServerOrders /></ProtectedRoute>} />
 
         {}
         <Route path="*" element={<Navigate to={roleHome[role] || "/admin"} replace />} />

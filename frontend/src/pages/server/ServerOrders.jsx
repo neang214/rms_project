@@ -10,17 +10,17 @@ import { PageHeader, StatsBar } from "@/components/shared"
 import { orderTotal, statusConfig } from "@/components/cashier/orderHelpers"
 import ViewOrderDialog from "@/components/cashier/ViewOrderDialog"
 
-// Read-only version of the active-orders view: a waiter can check how an
+// Read-only version of the active-orders view: a server can check how an
 // order they placed is progressing, but payment stays with the cashier,
 // so there's no Pay action here (see ActiveOrdersTable for that version).
-export default function WaiterOrders() {
+export default function ServerOrders() {
   const { t } = useLang()
   usePageTitle("Orders")
   const { orders, fetchOrders, isLoading } = useOrderStore()
   const [viewOrder, setViewOrder] = useState(null)
   const [search, setSearch] = useState("")
 
-  useSocketRole("waiter")
+  useSocketRole("server")
 
   useEffect(() => {
     fetchOrders()

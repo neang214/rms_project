@@ -59,10 +59,10 @@ export default function StationMenu({ config }) {
       {filtered.length === 0 ? (
         <div className="text-center py-16 text-[var(--color-muted)] text-sm">No menu items found.</div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
           {filtered.map(item => (
-            <div key={item.menu_item_id} className={cn("bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden group relative", !item.available && "opacity-60")}>
-              <div className="relative h-32 overflow-hidden bg-[var(--color-border)]">
+            <div key={item.menu_item_id} className={cn("bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] overflow-hidden group relative", !item.available && "opacity-60")}>
+              <div className="relative aspect-square overflow-hidden bg-[var(--color-border)]">
                 <img src={imageUrl(item.image_url, config.fallbackImg)} alt={menuItemName(item, lang)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 {!item.available && (
                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center">

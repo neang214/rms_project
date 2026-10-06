@@ -1,32 +1,24 @@
 import { useState, useEffect } from "react"
 import { useDashboardStore } from "../../context/dashboardContext"
-import { usePaymentStore } from "../../context/paymentContext"
 import { useOrderStore } from "../../context/orderContext"
 import { usePageTitle } from "../../hooks/usePageTitle"
-import { PaymentStats, ReportBuilder } from "@/components/admin/PaymentsParts"
+import { ReportBuilder } from "@/components/admin/PaymentsParts"
 
-export default function PaymentsReport() {
-  usePageTitle("Payment & Report")
+export default function CashierReports() {
+  usePageTitle("Reports")
   const { dailyRevenue, fetchDailyRevenue } = useDashboardStore()
-  const { payments, fetchPayments } = usePaymentStore()
   const { orders, fetchOrders, isLoading: ordersLoading } = useOrderStore()
 
-  const [activePeriod] = useState("Daily") 
+  // Cashier reports stay scoped to today's shift — weekly/monthly rollups
+  // are an admin-level view (see admin/Reports.jsx), so there's only one
+  // period here, same as the page this was split out of.
+  const [activePeriod] = useState("Daily")
   const [generated, setGenerated] = useState(false)
 
   useEffect(() => {
     fetchDailyRevenue()
-    fetchPayments()
     fetchOrders()
   }, [])
-
-  const todaysPayments = payments.filter(p => {
-    const d = new Date(p.payment_date)
-    const today = new Date()
-    return d.toDateString() === today.toDateString() && p.status === "Completed"
-  })
-
-  const todaysRevenue = todaysPayments.reduce((s, p) => s + Number(p.amount), 0)
 
   const totalRevenue = Number(dailyRevenue?.total || 0)
   const periodOrders = orders.filter(o => new Date(o.order_date).toDateString() === new Date().toDateString())
@@ -35,9 +27,7 @@ export default function PaymentsReport() {
 
   return (
     <div className="space-y-5">
-      <h1 className="text-2xl font-display font-bold text-[var(--color-text)]">Payments & Reports</h1>
-
-      <PaymentStats orders={orders} todaysPayments={todaysPayments} todaysRevenue={todaysRevenue} />
+      <h1 className="text-2xl font-display font-bold text-[var(--color-text)]">Reports</h1>
 
       <ReportBuilder
         generated={generated} setGenerated={setGenerated}

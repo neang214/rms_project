@@ -15,11 +15,11 @@ import { useLang } from "@/i18n/LanguageContext"
 
 const KHR_RATE = 4100
 
-// Waiter ordering flow: pick a table, build the cart from the menu, submit.
+// Server ordering flow: pick a table, build the cart from the menu, submit.
 // Deliberately mirrors CashierMenu's table -> cart -> order flow (same UX
 // pattern the app already uses), since taking an order for a table is the
-// same action whether it's a cashier or a waiter doing it.
-export default function WaiterMenu() {
+// same action whether it's a cashier or a server doing it.
+export default function ServerMenu() {
   usePageTitle("Menu")
   const { t } = useLang()
   const { items, fetchItems } = useMenuItemStore()
