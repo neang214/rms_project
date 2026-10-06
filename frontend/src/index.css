@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Serif:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+/*
+ * Refined palette — same family as before (botanical green + warm amber,
+ * "Zoom Garden Café & Wine") but deeper and less saturated than the
+ * original stock-emerald/stock-amber pairing, which read as a generic
+ * SaaS template rather than a café brand. Status colors (success/warning/
+ * danger) are pulled from this same warm, muted family instead of raw
+ * Tailwind red/blue/green, and a new --color-info token replaces the ad
+ * hoc bright blue used for things like party-size badges — the old raw
+ * Tailwind colors sprinkled through components had no dark-mode variants
+ * at all, so this also fixes those badges going illegible in dark mode.
+ */
+@theme {
+  --color-primary: #1f7d5c;
+  --color-primary-light: #4d9d78;
+  --color-primary-dark: #145843;
+  --color-primary-muted: #e3f1e9;
+
+  --color-accent: #b5702f;
+  --color-accent-light: #d08f4f;
+  --color-accent-muted: #f5e6d3;
+
+  --color-border: #ece7de;
+  --color-border-strong: #ddd5c7;
+  --color-muted: #85796b;
+  --color-text: #2b2621;
+  --color-text-secondary: #5c5347;
+  --color-background: #faf7f2;
+  --color-surface: #ffffff;
+  --color-text-invert: #ffffff;
+
+  --color-success: #1f7d5c;
+  --color-warning: #b5702f;
+  --color-danger: #b3413a;
+  --color-danger-muted: #f6e6e4;
+  --color-info: #3f6e8c;
+  --color-info-muted: #e5edf1;
+  --color-flame: #c1522a;
+  --color-flame-muted: #f8e0d2;
+  --color-plum: #7a4a68;
+  --color-plum-muted: #f2e7ee;
+
+  --font-sans: 'Roboto', sans-serif;
+  --font-display: 'Roboto', sans-serif;
+}
+
+:root { color-scheme: light; }
+
+.dark {
+  --color-background: #17140f;
+  --color-surface: #211d17;
+  --color-border: #2c261e;
+  --color-text: #f5f0e8;
+  --color-text-secondary: #b8ac9a;
+  --color-primary: #4d9d78;
+  --color-primary-light: #74b899;
+  --color-primary-dark: #1f7d5c;
+  --color-primary-muted: #1c3329;
+  --color-border-strong: #3a3226;
+  --color-text-invert: #17140f;
+  --color-accent: #d08f4f;
+  --color-accent-light: #e0ad78;
+  --color-accent-muted: #3a2c1a;
+  --color-muted: #9c9182;
+  --color-danger: #cf6055;
+  --color-danger-muted: #3a231f;
+  --color-info: #6b9bb8;
+  --color-info-muted: #1f2e36;
+  --color-flame: #dd8256;
+  --color-flame-muted: #3d2419;
+  --color-plum: #b98bab;
+  --color-plum-muted: #2e2230;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+*, ::before, ::after {
+  border-color: var(--color-border);
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 6px;
+  border: 2px solid var(--color-background);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }
+
+body { transition: background-color 0.2s ease, color 0.2s ease; }
+
+h1, h2, h3 { letter-spacing: -0.01em; }
