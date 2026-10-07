@@ -40,7 +40,7 @@ npm install
 cp .env.example .env   # fill in real values — see below
 npx prisma db push     # creates/updates the database schema
 node prisma/seed.js    # optional: seeds categories, tables, one login per role, payment methods
-npm start
+npm run dev
 ```
 
 ### 2. Frontend
